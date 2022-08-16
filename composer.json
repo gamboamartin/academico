@@ -56,7 +56,8 @@
         "gamboa.martin/services": "dev-main",
         "gamboa.martin/cat_sat": "dev-main",
         "gamboa.martin/direccion_postal": "dev-main",
-        "gamboa.martin/js_base": "dev-master"
+        "gamboa.martin/js_base": "dev-master",
+        "gamboa.martin/organigrama": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
