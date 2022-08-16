@@ -1,6 +1,6 @@
 {
-  "name": "gamboa.martin/organigrama",
-  "description": "Organigrama de una empresa",
+  "name": "gamboa.martin/academico",
+  "description": "Academico",
   "type": "library",
   "license": "GPL-3.0-or-later",
   "authors": [
@@ -12,7 +12,7 @@
 
     "autoload": {
         "psr-4": {
-          "gamboamartin\\organigrama\\controllers\\": "controllers",
+          "gamboamartin\\academido\\controllers\\": "controllers",
           "config\\": "config/",
           "models\\": "orm",
           "tests\\": "tests/",
