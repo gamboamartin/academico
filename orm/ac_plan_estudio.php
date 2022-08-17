@@ -6,7 +6,7 @@ use PDO;
 class ac_plan_estudio extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
-        $columnas = array($tabla=>false,'ac_nivel');
+        $columnas = array($tabla=>false,'ac_nivel'=>$tabla);
         $campos_obligatorios = array();
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
