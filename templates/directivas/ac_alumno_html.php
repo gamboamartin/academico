@@ -177,21 +177,30 @@ class ac_alumno_html extends html_controler {
 
     private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
     {
-        $selects = new stdClass();
-
-        $ac_nivel_html = new ac_nivel_html(html:$this->html_base);
-
-        $select = $ac_nivel_html->select_ac_nivel_id(cols: 12, con_registros:true,
-            id_selected:$row_upd->ac_nivel_id,link: $link);
+        $selects = $this->selects_modifica(link: $link, row_upd: $row_upd);
         if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
-        $selects->ac_nivel_id = $select;
+        $texts = $this->texts_alta(row_upd: $row_upd, value_vacio: false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $texts);
+        }
+
+        $fecha_nac = $this->fec_fecha_nacimiento(cols: 6,row_upd: $row_upd, value_vacio: false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $texts);
+        }
+
+        $fecha = new stdClass();
+        $fecha->fecha_nacimiento = $fecha_nac;
 
         $alta_inputs = new stdClass();
 
         $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $texts;
+        $alta_inputs->fecha = $fecha;
+
         return $alta_inputs;
     }
 
@@ -252,6 +261,71 @@ class ac_alumno_html extends html_controler {
 
         $select = $this->select_adm_idioma_id(cols: 12, con_registros:true,
             id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->adm_idioma_id = $select;
+
+        return $selects;
+    }
+
+    private function selects_modifica(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        $selects = new stdClass();
+
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
+        }
+
+        $ac_estado_alumno_html = new ac_estado_alumno_html(html:$this->html_base);
+
+        $select = $ac_estado_alumno_html->select_ac_estado_alumno_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->ac_estado_alumno_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_estado_alumno_id = $select;
+
+        $ac_turno_html = new ac_turno_html(html:$this->html_base);
+
+        $select = $ac_turno_html->select_ac_turno_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->ac_turno_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_turno_id = $select;
+
+
+        $select = $this->select_dp_estado_nacimiento_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->dp_estado_nacimiento_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->dp_estado_nacimiento_id = $select;
+
+        $select = $this->select_adm_estado_civil_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->adm_estado_civil_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->adm_estado_civil_id = $select;
+
+        $select = $this->select_adm_genero_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->adm_genero_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->adm_genero_id = $select;
+
+        $select = $this->select_adm_idioma_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->adm_idioma_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
