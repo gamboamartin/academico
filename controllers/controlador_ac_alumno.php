@@ -37,6 +37,8 @@ class controlador_ac_alumno extends system {
         $this->registro['descripcion_select'] = $this->registro['matricula'].' '.$this->registro['nombre'].' ';
         $this->registro['descripcion_select'] .= $this->registro['apellido_paterno'].' ';
         $this->registro['descripcion_select'] .= $this->registro['apellido_materno'];
+        $alias = $this->registro['apellido_paterno'].' '. $this->registro['apellido_materno'];
+        $this->registro['alias'] = strtoupper($alias);
         
         $r_alta_bd = parent::alta_bd($header, $ws);
         if(errores::$error){
