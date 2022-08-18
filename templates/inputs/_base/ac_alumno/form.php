@@ -9,8 +9,6 @@
 <?php echo $controlador->inputs->correo; ?>
 <?php echo $controlador->inputs->telefono_fijo; ?>
 <?php echo $controlador->inputs->telefono_movil; ?>
-<?php echo $controlador->inputs->fecha_nacimiento; ?>
-<?php echo $controlador->inputs->select->dp_estado_nacimiento_id?>
 
 <?php echo $controlador->inputs->select->dp_pais_id?>
 <?php echo $controlador->inputs->select->dp_estado_id?>
@@ -27,3 +25,6 @@
 <?php echo $controlador->inputs->select->adm_estado_civil_id; ?>
 <?php echo $controlador->inputs->select->adm_genero_id; ?>
 <?php echo $controlador->inputs->select->adm_idioma_id; ?>
+
+<?php echo $controlador->inputs->fecha_nacimiento; ?>
+<?php echo $controlador->inputs->select->dp_estado_nacimiento_id?>
