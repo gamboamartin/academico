@@ -34,6 +34,10 @@ class controlador_ac_alumno extends system {
     public function alta_bd(bool $header, bool $ws = false): array|stdClass
     {
         $this->registro['codigo'] = $this->registro['matricula'];
+        $this->registro['descripcion_select'] = $this->registro['matricula'].' '.$this->registro['nombre'].' ';
+        $this->registro['descripcion_select'] .= $this->registro['apellido_paterno'].' ';
+        $this->registro['descripcion_select'] .= $this->registro['apellido_materno'];
+        
         $r_alta_bd = parent::alta_bd($header, $ws);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al dar de alta registro',data:  $r_alta_bd,
