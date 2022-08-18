@@ -10,6 +10,7 @@
 <?php echo $controlador->inputs->telefono_fijo; ?>
 <?php echo $controlador->inputs->telefono_movil; ?>
 <?php echo $controlador->inputs->fecha_nacimiento; ?>
+<?php echo $controlador->inputs->select->dp_estado_nacimiento_id?>
 
 <?php echo $controlador->inputs->exterior; ?>
 <?php echo $controlador->inputs->interior; ?>
@@ -24,7 +25,6 @@
 
 <?php echo $controlador->inputs->select->ac_estado_alumno_id?>
 <?php echo $controlador->inputs->select->ac_turno_id?>
-<?php echo $controlador->inputs->select->dp_estado_nacimiento_id?>
 <?php echo $controlador->inputs->select->adm_estado_civil_id; ?>
 <?php echo $controlador->inputs->select->adm_genero_id; ?>
 <?php echo $controlador->inputs->select->adm_idioma_id; ?>

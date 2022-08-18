@@ -209,7 +209,15 @@ class ac_alumno_html extends html_controler {
         $selects = new stdClass();
         $row_upd = new stdClass();
 
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        $params = new stdClass();
+        $params->dp_pais_id = new stdClass();
+        $params->dp_pais_id->cols = 4;
+        $params->dp_estado_id = new stdClass();
+        $params->dp_estado_id->cols = 4;
+        $params->dp_municipio_id = new stdClass();
+        $params->dp_municipio_id->cols = 4;
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects,
+            params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
         }
@@ -235,7 +243,7 @@ class ac_alumno_html extends html_controler {
         $selects->ac_turno_id = $select;
 
 
-        $select = $this->select_dp_estado_nacimiento_id(cols: 12, con_registros:true,
+        $select = $this->select_dp_estado_nacimiento_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
