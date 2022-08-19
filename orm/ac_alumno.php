@@ -24,7 +24,7 @@ class ac_alumno extends modelo{
             $this->registro['dp_cp_id'],$this->registro['dp_colonia_postal_id']);
 
         $this->registro['codigo'] = $this->registro['matricula'];
-        $this->registro['descripcion_select'] = $this->registro['matricula'].' '.$this->registro['nombre'].' ';
+        $this->registro['descripcion_select'] = $this->registro['matricula'].' - '.$this->registro['nombre'].' ';
         $this->registro['descripcion_select'] .= $this->registro['apellido_paterno'].' ';
         $this->registro['descripcion_select'] .= $this->registro['apellido_materno'];
         $alias = $this->registro['apellido_paterno'].' '. $this->registro['apellido_materno'];
@@ -36,5 +36,25 @@ class ac_alumno extends modelo{
         }
 
         return  $r_alta_bd;
+    }
+
+    public function modifica_bd(array $registro, int $id, bool $reactiva = false): array|stdClass
+    {
+        unset($registro['dp_pais_id'],$registro['dp_estado_id'],$registro['dp_municipio_id'],
+            $registro['dp_cp_id'],$registro['dp_colonia_postal_id']);
+
+        $registro['codigo'] = $registro['matricula'];
+        $registro['descripcion_select'] = $registro['matricula'].' - '.$registro['nombre'].' ';
+        $registro['descripcion_select'] .= $registro['apellido_paterno'].' ';
+        $registro['descripcion_select'] .= $registro['apellido_materno'];
+        $alias = $registro['apellido_paterno'].' '. $registro['apellido_materno'];
+        $registro['alias'] = strtoupper($alias);
+        
+        $r_modifica_bd = parent::modifica_bd($registro, $id, $reactiva);
+        if(errores::$error){
+            return $this->error->error('Error al dar de modificar registro',$r_modifica_bd);
+        }
+        
+        return $r_modifica_bd;
     }
 }
