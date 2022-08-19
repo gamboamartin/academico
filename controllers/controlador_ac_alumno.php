@@ -29,6 +29,46 @@ class controlador_ac_alumno extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Alumno';
+
+        $keys_row_lista = $this->keys_rows_lista();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar keys de lista',data:  $keys_row_lista);
+            print_r($error);
+            exit;
+        }
+        $this->keys_row_lista = $keys_row_lista;
+    }
+
+    private function keys_rows_lista(): array
+    {
+
+        $keys_row_lista = array();
+
+            $keys = array('ac_alumno_id','ac_alumno_nombre','ac_alumno_apellido_paterno','ac_alumno_apellido_paterno',
+                'ac_alumno_matricula','ac_alumno_curp');
+
+        foreach ($keys as $campo){
+            $keys_row_lista = $this->key_row_lista_init(campo: $campo, keys_row_lista: $keys_row_lista);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al inicializar key',data: $keys_row_lista);
+            }
+        }
+
+        return $keys_row_lista;
+    }
+
+    private function key_row_lista_init(string $campo, array $keys_row_lista): array
+    {
+        $data = new stdClass();
+        $data->campo = $campo;
+
+        $campo = str_replace('ac_alumno_', '', $campo);
+        $campo = str_replace('_', ' ', $campo);
+        $campo = ucfirst(strtolower($campo));
+
+        $data->name_lista = $campo;
+        $keys_row_lista[]= $data;
+        return $keys_row_lista;
     }
 
 
