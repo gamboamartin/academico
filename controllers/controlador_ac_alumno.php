@@ -55,11 +55,10 @@ class controlador_ac_alumno extends system {
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
 
-        $inputs = (new ac_alumno_html(html: $this->html_base))->genera_inputs_modifica(controler: $this, link: $this->link);
+        $inputs = (new ac_alumno_html(html: $this->html_base))->inputs_org_empresa(
+            controlador_org_empresa:$this);
         if(errores::$error){
-            $error = $this->errores->error(mensaje: 'Error al generar inputs',data:  $inputs);
-            print_r($error);
-            die('Error');
+            return $this->errores->error(mensaje: 'Error al inicializar inputs',data:  $inputs);
         }
 
         return $r_modifica;

@@ -9,7 +9,9 @@ class ac_alumno extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
         $columnas = array($tabla=>false,'ac_estado_alumno'=>$tabla,'ac_turno'=>$tabla,'dp_calle_pertenece'=>$tabla,
-            'adm_estado_civil'=>$tabla,'adm_genero'=>$tabla, 'adm_idioma'=>$tabla);
+            'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
+            'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado', 'adm_estado_civil'=>$tabla,'adm_genero'=>$tabla,
+            'adm_idioma'=>$tabla, );
         $campos_obligatorios = array();
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
@@ -20,7 +22,7 @@ class ac_alumno extends modelo{
     {
         unset($this->registro['dp_pais_id'],$this->registro['dp_estado_id'],$this->registro['dp_municipio_id'],
             $this->registro['dp_cp_id'],$this->registro['dp_colonia_postal_id']);
-        
+
         $this->registro['codigo'] = $this->registro['matricula'];
         $this->registro['descripcion_select'] = $this->registro['matricula'].' '.$this->registro['nombre'].' ';
         $this->registro['descripcion_select'] .= $this->registro['apellido_paterno'].' ';
