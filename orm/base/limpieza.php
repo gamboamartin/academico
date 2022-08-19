@@ -118,6 +118,18 @@ class limpieza{
         return $registro;
     }
 
+    private function init_data_ubicacion_alumno(controler $controler, stdClass $org_empresa): stdClass
+    {
+        $controler->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
+        $controler->row_upd->dp_estado_id = $org_empresa->dp_estado_id;
+        $controler->row_upd->dp_municipio_id = $org_empresa->dp_municipio_id;
+        $controler->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
+        $controler->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
+        $controler->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
+
+        return $controler->row_upd;
+    }
+
     private function init_data_ubicacion_empresa(controler $controler, stdClass $org_empresa): stdClass
     {
         $controler->row_upd->dp_pais_id = $org_empresa->dp_pais_id;
@@ -126,6 +138,8 @@ class limpieza{
         $controler->row_upd->dp_cp_id = $org_empresa->dp_cp_id;
         $controler->row_upd->dp_colonia_postal_id = $org_empresa->dp_colonia_postal_id;
         $controler->row_upd->dp_calle_pertenece_id = $org_empresa->dp_calle_pertenece_id;
+        $controler->row_upd->dp_calle_pertenece_entre1_id = $org_empresa->org_empresa_dp_calle_pertenece_entre1_id;
+        $controler->row_upd->dp_calle_pertenece_entre2_id = $org_empresa->org_empresa_dp_calle_pertenece_entre2_id;
 
         return $controler->row_upd;
     }
@@ -211,7 +225,7 @@ class limpieza{
 
         }
 
-        $init = $this->init_data_ubicacion_empresa(controler: $controler,org_empresa:  $ac_alumno);
+        $init = $this->init_data_ubicacion_alumno(controler: $controler,org_empresa:  $ac_alumno);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
         }
