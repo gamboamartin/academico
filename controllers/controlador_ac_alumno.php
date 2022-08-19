@@ -44,7 +44,7 @@ class controlador_ac_alumno extends system {
 
         $keys_row_lista = array();
 
-            $keys = array('ac_alumno_id','ac_alumno_nombre','ac_alumno_apellido_paterno','ac_alumno_apellido_paterno',
+            $keys = array('ac_alumno_id','ac_alumno_nombre','ac_alumno_apellido_paterno','ac_alumno_apellido_materno',
                 'ac_alumno_matricula','ac_alumno_curp');
 
         foreach ($keys as $campo){
