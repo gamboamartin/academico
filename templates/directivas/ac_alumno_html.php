@@ -528,8 +528,8 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'apellido_paterno',place_holder: 'Apellido Paterno',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text_required(disable: false,name: 'apellido_paterno',
+            place_holder: 'Apellido 1',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -552,8 +552,8 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'apellido_materno',place_holder: 'Apellido Materno',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text(disable: false,name: 'apellido_materno',place_holder: 'Apellido 2',
+            required: false, row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -648,8 +648,8 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'telefono_fijo',place_holder: 'Telefono Fijo',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text(disable: false,name: 'telefono_fijo',place_holder: 'Telefono Fijo',
+            required: false, row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -672,8 +672,8 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'telefono_movil',place_holder: 'Telefono Movil',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text(disable: false,name: 'telefono_movil',place_holder: 'Telefono Movil',
+            required: false, row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
