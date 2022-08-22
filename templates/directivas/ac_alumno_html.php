@@ -480,8 +480,8 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'interior',place_holder: 'Num Int',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text(disable: false,name: 'interior',place_holder: 'Num Int',required: false,
+            row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
