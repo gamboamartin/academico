@@ -16,6 +16,7 @@ class ac_alumno extends modelo{
 
         $tipo_campos['telefono_fijo'] = 'telefono_mx';
         $tipo_campos['telefono_movil'] = 'telefono_mx';
+        $tipo_campos['correo'] = 'correo';
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas,tipo_campos: $tipo_campos);
