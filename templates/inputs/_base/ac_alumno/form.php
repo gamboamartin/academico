@@ -9,6 +9,9 @@
 <?php echo $controlador->inputs->correo; ?>
 <?php echo $controlador->inputs->telefono_fijo; ?>
 <?php echo $controlador->inputs->telefono_movil; ?>
+<div class="col-sm-12 content_center">
+    <label id="label_alerta" class="label-error label-alerta">Introduzca un número de teléfono valido </label>
+</div>
 
 <?php echo $controlador->inputs->select->dp_pais_id?>
 <?php echo $controlador->inputs->select->dp_estado_id?>
