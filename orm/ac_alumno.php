@@ -14,8 +14,11 @@ class ac_alumno extends modelo{
             'adm_idioma'=>$tabla, );
         $campos_obligatorios = array();
 
+        $tipo_campos['telefono_fijo'] = 'telefono_mx';
+        $tipo_campos['telefono_movil'] = 'telefono_mx';
+
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
-            columnas: $columnas);
+            columnas: $columnas,tipo_campos: $tipo_campos);
     }
 
     public function alta_bd(): array|stdClass
