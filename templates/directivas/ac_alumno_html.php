@@ -1,6 +1,7 @@
 <?php
 namespace html;
 
+use config\generales;
 use gamboamartin\academico\controllers\controlador_ac_alumno;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
@@ -434,8 +435,11 @@ class ac_alumno_html extends html_controler {
         }
 
         $modelo = new dp_estado($link);
-        if(is_null($id_selected)){
-            $id_selected = -1;
+        if(is_null($id_selected) || $id_selected === -1){
+            $generales = new generales();
+            if(isset($generales->defaults['dp_estado_nacimiento']['id'])) {
+                $id_selected = $generales->defaults['dp_estado_nacimiento']['id'];
+            }
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'Estado Nacimiento',
