@@ -6,6 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
+use models\base\limpieza;
 use models\im_registro_patronal;
 use PDO;
 use stdClass;
@@ -49,6 +50,11 @@ class ac_centro_educativo_html extends html_controler {
     public function genera_inputs_modifica(controlador_ac_centro_educativo $controler,PDO $link,
                                            stdClass $params = new stdClass()): array|stdClass
     {
+        $init = (new limpieza())->init_modifica_ac_alumno(controler: $controler);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al inicializa datos',data:  $init);
+        }
+
         $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
