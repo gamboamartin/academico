@@ -16,7 +16,10 @@ class ac_plan_estudio_html extends html_controler {
     {
         $controler->inputs->select = new stdClass();
         $controler->inputs->id_carrera = $inputs->texts->id_carrera;
+        $controler->inputs->clave_plan = $inputs->texts->clave_plan;
+        $controler->inputs->calificacion_min_aprobacion = $inputs->texts->calificacion_min_aprobacion;
         $controler->inputs->select->ac_nivel_id = $inputs->selects->ac_nivel_id;
+        $controler->inputs->select->ac_rvoe_id = $inputs->selects->ac_rvoe_id;
 
         return $controler->inputs;
     }
@@ -66,6 +69,16 @@ class ac_plan_estudio_html extends html_controler {
         }
 
         $selects->ac_nivel_id = $select;
+        
+        $ac_rvoe_html = new ac_rvoe_html(html:$this->html_base);
+
+        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_rvoe_id = $select;
 
         $row_upd = new stdClass();
 
@@ -74,6 +87,18 @@ class ac_plan_estudio_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_carrera = $input;
+
+        $input = $this->clave_plan(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->clave_plan = $input;
+
+        $input = $this->calificacion_min_aprobacion(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->calificacion_min_aprobacion = $input;
 
         $alta_inputs = new stdClass();
 
@@ -98,11 +123,33 @@ class ac_plan_estudio_html extends html_controler {
 
         $selects->ac_nivel_id = $select;
 
+        $ac_rvoe_html = new ac_rvoe_html(html:$this->html_base);
+
+        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->ac_rvoe_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_rvoe_id = $select;
+
         $input = $this->id_carrera(cols: 12,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_carrera = $input;
+        
+        $input = $this->clave_plan(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->clave_plan = $input;
+
+        $input = $this->calificacion_min_aprobacion(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->calificacion_min_aprobacion = $input;
 
         $alta_inputs = new stdClass();
 
@@ -122,6 +169,52 @@ class ac_plan_estudio_html extends html_controler {
 
         $html =$this->directivas->input_text_required(disable: false,name: 'id_carrera',
             place_holder: 'Id Carrera',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function clave_plan(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'clave_plan',
+            place_holder: 'Clave Plan',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function calificacion_min_aprobacion(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'calificacion_min_aprobacion',
+            place_holder: 'Calificacion Minimo Aprobacion',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }

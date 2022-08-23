@@ -6,6 +6,9 @@
 <?php echo $controlador->inputs->descripcion_select; ?>
 <?php echo $controlador->inputs->alias; ?>
 <?php echo $controlador->inputs->id_carrera; ?>
+<?php echo $controlador->inputs->clave_plan; ?>
+<?php echo $controlador->inputs->calificacion_min_aprobacion; ?>
 
 
 <?php echo $controlador->inputs->select->ac_nivel_id; ?>
+<?php echo $controlador->inputs->select->ac_rvoe_id; ?>
