@@ -2,8 +2,10 @@
 namespace html;
 
 use gamboamartin\academico\controllers\controlador_ac_centro_educativo;
+use gamboamartin\academico\controllers\controlador_ac_materia;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
+use gamboamartin\system\system;
 use gamboamartin\template\directivas;
 use models\ac_materia;
 use PDO;
@@ -27,6 +29,164 @@ class ac_materia_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
         return $select;
+    }
+
+    protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
+    {
+        $controler->inputs->select = new stdClass();
+        $controler->inputs->id_asignatura = $inputs->texts->id_asignatura;
+        $controler->inputs->no_creditos = $inputs->texts->no_creditos;
+        $controler->inputs->select->ac_tipo_asignatura_id = $inputs->selects->ac_tipo_asignatura_id;
+
+        return $controler->inputs;
+    }
+
+    public function genera_inputs_alta(controlador_ac_materia $controler,PDO $link): array|stdClass
+    {
+        $inputs = $this->init_alta(link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+
+        $inputs_asignados = $this->asigna_inputs(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
+        }
+
+        return $inputs_asignados;
+    }
+
+    public function genera_inputs_modifica(controlador_ac_materia $controler,PDO $link,
+                                           stdClass $params = new stdClass()): array|stdClass
+    {
+        $inputs = $this->init_modifica(link: $link, row_upd: $controler->row_upd, params: $params);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+
+        }
+        $inputs_asignados = $this->asigna_inputs(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
+        }
+
+        return $inputs_asignados;
+    }
+
+    private function init_alta(PDO $link): array|stdClass
+    {
+        $selects = new stdClass();
+        $inputs = new stdClass();
+
+        $ac_tipo_asignatura_html = new ac_tipo_asignatura_html(html:$this->html_base);
+
+        $select = $ac_tipo_asignatura_html->select_ac_tipo_asignatura_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_tipo_asignatura_id = $select;
+
+        $row_upd = new stdClass();
+
+        $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->id_asignatura = $input;
+
+        $input = $this->no_creditos(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->no_creditos = $input;
+
+        $alta_inputs = new stdClass();
+
+        $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $inputs;
+        return $alta_inputs;
+    }
+
+
+    private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
+    {
+        $selects = new stdClass();
+        $inputs = new stdClass();
+
+        $ac_tipo_asignatura_html = new ac_tipo_asignatura_html(html:$this->html_base);
+
+        $select = $ac_tipo_asignatura_html->select_ac_tipo_asignatura_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->ac_tipo_asignatura_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_tipo_asignatura_id = $select;
+
+        $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->id_asignatura = $input;
+        
+        $input = $this->no_creditos(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->no_creditos = $input;
+
+        $alta_inputs = new stdClass();
+
+        $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $inputs;
+        return $alta_inputs;
+    }
+
+    public function id_asignatura(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'id_asignatura',
+            place_holder: 'Id Asignatura',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+    
+    public function no_creditos(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'no_creditos',
+            place_holder: 'No Creditos',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
     }
 
 }

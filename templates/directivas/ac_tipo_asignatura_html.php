@@ -23,7 +23,7 @@ class ac_tipo_asignatura_html extends html_controler {
         $modelo = new ac_tipo_asignatura($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Nivel');
+            modelo: $modelo, label: 'Tipo Asignatura');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
