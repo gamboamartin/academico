@@ -15,7 +15,7 @@ class ac_plan_estudio_html extends html_controler {
     protected function asigna_inputs(system $controler, stdClass $inputs): array|stdClass
     {
         $controler->inputs->select = new stdClass();
-
+        $controler->inputs->id_carrera = $inputs->texts->id_carrera;
         $controler->inputs->select->ac_nivel_id = $inputs->selects->ac_nivel_id;
 
         return $controler->inputs;
@@ -55,6 +55,7 @@ class ac_plan_estudio_html extends html_controler {
     private function init_alta(PDO $link): array|stdClass
     {
         $selects = new stdClass();
+        $inputs = new stdClass();
 
         $ac_nivel_html = new ac_nivel_html(html:$this->html_base);
 
@@ -66,9 +67,18 @@ class ac_plan_estudio_html extends html_controler {
 
         $selects->ac_nivel_id = $select;
 
+        $row_upd = new stdClass();
+
+        $input = $this->id_carrera(cols: 12,row_upd: $row_upd,value_vacio:  true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->id_carrera = $input;
+
         $alta_inputs = new stdClass();
 
         $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $inputs;
         return $alta_inputs;
     }
 
@@ -76,6 +86,7 @@ class ac_plan_estudio_html extends html_controler {
     private function init_modifica(PDO $link, stdClass $row_upd, stdClass $params = new stdClass()): array|stdClass
     {
         $selects = new stdClass();
+        $inputs = new stdClass();
 
         $ac_nivel_html = new ac_nivel_html(html:$this->html_base);
 
@@ -87,10 +98,39 @@ class ac_plan_estudio_html extends html_controler {
 
         $selects->ac_nivel_id = $select;
 
+        $input = $this->id_carrera(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->id_carrera = $input;
+
         $alta_inputs = new stdClass();
 
         $alta_inputs->selects = $selects;
+        $alta_inputs->texts = $inputs;
         return $alta_inputs;
     }
 
+    public function id_carrera(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'id_carrera',
+            place_holder: 'Id Carrera',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
 }

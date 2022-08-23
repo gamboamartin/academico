@@ -5,6 +5,7 @@
 <?php echo $controlador->inputs->descripcion; ?>
 <?php echo $controlador->inputs->descripcion_select; ?>
 <?php echo $controlador->inputs->alias; ?>
+<?php echo $controlador->inputs->id_carrera; ?>
 
 
 <?php echo $controlador->inputs->select->ac_nivel_id; ?>
