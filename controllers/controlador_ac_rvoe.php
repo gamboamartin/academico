@@ -17,7 +17,7 @@ use models\ac_rvoe;
 use PDO;
 use stdClass;
 
-class controlador_ac_nivel extends system {
+class controlador_ac_rvoe extends system {
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
