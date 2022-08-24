@@ -62,7 +62,7 @@ class ac_plan_estudio_html extends html_controler {
 
         $ac_nivel_html = new ac_nivel_html(html:$this->html_base);
 
-        $select = $ac_nivel_html->select_ac_nivel_id(cols: 12, con_registros:true,
+        $select = $ac_nivel_html->select_ac_nivel_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -72,7 +72,7 @@ class ac_plan_estudio_html extends html_controler {
         
         $ac_rvoe_html = new ac_rvoe_html(html:$this->html_base);
 
-        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 12, con_registros:true,
+        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -82,19 +82,19 @@ class ac_plan_estudio_html extends html_controler {
 
         $row_upd = new stdClass();
 
-        $input = $this->id_carrera(cols: 12,row_upd: $row_upd,value_vacio:  true);
+        $input = $this->id_carrera(cols: 6,row_upd: $row_upd,value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_carrera = $input;
 
-        $input = $this->clave_plan(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->clave_plan(cols: 6,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->clave_plan = $input;
 
-        $input = $this->calificacion_min_aprobacion(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->calificacion_min_aprobacion(cols: 6,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
@@ -115,7 +115,7 @@ class ac_plan_estudio_html extends html_controler {
 
         $ac_nivel_html = new ac_nivel_html(html:$this->html_base);
 
-        $select = $ac_nivel_html->select_ac_nivel_id(cols: 12, con_registros:true,
+        $select = $ac_nivel_html->select_ac_nivel_id(cols: 6, con_registros:true,
             id_selected:$row_upd->ac_nivel_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -125,7 +125,7 @@ class ac_plan_estudio_html extends html_controler {
 
         $ac_rvoe_html = new ac_rvoe_html(html:$this->html_base);
 
-        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 12, con_registros:true,
+        $select = $ac_rvoe_html->select_ac_rvoe_id(cols: 6, con_registros:true,
             id_selected:$row_upd->ac_rvoe_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -133,19 +133,19 @@ class ac_plan_estudio_html extends html_controler {
 
         $selects->ac_rvoe_id = $select;
 
-        $input = $this->id_carrera(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->id_carrera(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_carrera = $input;
         
-        $input = $this->clave_plan(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->clave_plan(cols: 6,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->clave_plan = $input;
 
-        $input = $this->calificacion_min_aprobacion(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->calificacion_min_aprobacion(cols: 6,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
