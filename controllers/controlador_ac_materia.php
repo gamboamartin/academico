@@ -29,6 +29,14 @@ class controlador_ac_materia extends system {
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Materia';
+
+        $keys_row_lista = $this->keys_rows_lista();
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar keys de lista',data:  $keys_row_lista);
+            print_r($error);
+            exit;
+        }
+        $this->keys_row_lista = $keys_row_lista;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -64,4 +72,35 @@ class controlador_ac_materia extends system {
         return $r_modifica;
     }
 
+    private function keys_rows_lista(): array
+    {
+        $keys_row_lista = array();
+
+        $keys = array('ac_materia_id', 'ac_materia_codigo', 'ac_materia_descripcion','ac_materia_id_asignatura',
+            'ac_materia_no_creditos', 'ac_tipo_asignatura_descripcion', 'ac_plan_estudio_descripcion');
+
+        foreach ($keys as $campo){
+            $keys_row_lista = $this->key_row_lista_init(campo: $campo, keys_row_lista: $keys_row_lista);
+            if(errores::$error){
+                return $this->errores->error(mensaje: 'Error al inicializar key',data: $keys_row_lista);
+            }
+        }
+
+        return $keys_row_lista;
+    }
+
+    private function key_row_lista_init(string $campo, array $keys_row_lista): array
+    {
+        $data = new stdClass();
+        $data->campo = $campo;
+
+        $campo = str_replace('ac_materia_', '', $campo);
+        $campo = str_replace('ac_', '', $campo);
+        $campo = str_replace('_', ' ', $campo);
+        $campo = ucfirst(strtolower($campo));
+
+        $data->name_lista = $campo;
+        $keys_row_lista[]= $data;
+        return $keys_row_lista;
+    }
 }

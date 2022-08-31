@@ -37,6 +37,7 @@ class ac_materia_html extends html_controler {
         $controler->inputs->id_asignatura = $inputs->texts->id_asignatura;
         $controler->inputs->no_creditos = $inputs->texts->no_creditos;
         $controler->inputs->select->ac_tipo_asignatura_id = $inputs->selects->ac_tipo_asignatura_id;
+        $controler->inputs->select->ac_plan_estudio_id = $inputs->selects->ac_plan_estudio_id;
 
         return $controler->inputs;
     }
@@ -87,6 +88,16 @@ class ac_materia_html extends html_controler {
 
         $selects->ac_tipo_asignatura_id = $select;
 
+        $ac_plan_estudio_html = new ac_plan_estudio_html(html:$this->html_base);
+
+        $select = $ac_plan_estudio_html->select_ac_plan_estudio_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_plan_estudio_id = $select;
+
         $row_upd = new stdClass();
 
         $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  true);
@@ -123,6 +134,16 @@ class ac_materia_html extends html_controler {
         }
 
         $selects->ac_tipo_asignatura_id = $select;
+
+        $ac_plan_estudio_html = new ac_plan_estudio_html(html:$this->html_base);
+
+        $select = $ac_plan_estudio_html->select_ac_plan_estudio_id(cols: 12, con_registros:true,
+            id_selected:$row_upd->ac_plan_estudio_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_plan_estudio_id = $select;
 
         $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
