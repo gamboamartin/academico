@@ -231,12 +231,20 @@ class ac_alumno_html extends html_controler {
         $params = new stdClass();
         $params->dp_pais_id = new stdClass();
         $params->dp_pais_id->cols = 4;
+        $params->dp_pais_id->required = true;
         $params->dp_estado_id = new stdClass();
         $params->dp_estado_id->cols = 4;
+        $params->dp_estado_id->required = true;
         $params->dp_municipio_id = new stdClass();
         $params->dp_municipio_id->cols = 4;
+        $params->dp_municipio_id->required = true;
+        $params->dp_cp_id = new stdClass();
+        $params->dp_cp_id->required = true;
+        $params->dp_colonia_postal_id = new stdClass();
+        $params->dp_colonia_postal_id->required = true;
         $params->dp_calle_pertenece_id = new stdClass();
         $params->dp_calle_pertenece_id->cols = 12;
+        $params->dp_calle_pertenece_id->required = true;
         $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects,
             params: $params);
         if(errores::$error){
@@ -306,12 +314,16 @@ class ac_alumno_html extends html_controler {
         $params = new stdClass();
         $params->dp_pais_id = new stdClass();
         $params->dp_pais_id->cols = 4;
+        $params->dp_pais_id->required = true;
         $params->dp_estado_id = new stdClass();
         $params->dp_estado_id->cols = 4;
+        $params->dp_estado_id->required = true;
         $params->dp_municipio_id = new stdClass();
         $params->dp_municipio_id->cols = 4;
+        $params->dp_municipio_id->required = true;
         $params->dp_calle_pertenece_id = new stdClass();
         $params->dp_calle_pertenece_id->cols = 12;
+        $params->dp_calle_pertenece_id->required = true;
 
         $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects,
             params: $params);
@@ -329,8 +341,11 @@ class ac_alumno_html extends html_controler {
 
         $selects->ac_estado_alumno_id = $select;
 
-        $ac_turno_html = new ac_turno_html(html:$this->html_base);
+        if(!isset($row_upd->ac_turno_id)){
+            $row_upd->ac_turno_id = -1;
+        }
 
+        $ac_turno_html = new ac_turno_html(html:$this->html_base);
         $select = $ac_turno_html->select_ac_turno_id(cols: 4, con_registros:true,
             id_selected:$row_upd->ac_turno_id,link: $link);
         if(errores::$error){
