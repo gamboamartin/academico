@@ -13,7 +13,9 @@
 <?php echo $controlador->inputs->telefono_fijo; ?>
 <?php echo $controlador->inputs->telefono_movil; ?>
 <div class="col-sm-12 content_center">
-    <label id="label_alerta" class="label-error label-alerta">Introduzca un número de teléfono valido </label>
+    <label id="label_alerta" class="label-error-fijo label-alerta">Introduzca un número de teléfono fijo valido </label>
+    <br>
+    <label id="label_alerta" class="label-error-movil label-alerta">Introduzca un número de teléfono movil valido </label>
 </div>
 
 <?php echo $controlador->inputs->select->dp_pais_id?>
