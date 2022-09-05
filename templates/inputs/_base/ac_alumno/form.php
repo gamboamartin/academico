@@ -7,6 +7,9 @@
 <?php echo $controlador->inputs->curp; ?>
 <?php echo $controlador->inputs->matricula; ?>
 <?php echo $controlador->inputs->correo; ?>
+<div class="col-sm-12 content_center">
+    <label id="label_alerta" class="label-error-correo label-alerta">Introduzca un correo valido </label>
+</div>
 <?php echo $controlador->inputs->telefono_fijo; ?>
 <?php echo $controlador->inputs->telefono_movil; ?>
 <div class="col-sm-12 content_center">

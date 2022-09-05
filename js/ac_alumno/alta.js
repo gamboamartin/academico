@@ -17,6 +17,7 @@ $( document ).ready(function() {
     let telefono_error = $(".label-error");
     let telefono = '';
     let telefono_regex = new RegExp('[1-9][0-9]{9}');
+
     telefono_error.hide();
     telefono_txt_fijo.keyup(function () {
         telefono = $(this).val();
@@ -51,5 +52,27 @@ $( document ).ready(function() {
             telefono_error.hide();
         }
 
+    });
+
+    let txt_correo = $("input[name=correo]");
+    let correo_regex = new RegExp('[a-z0-9!#$%&\'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?');
+    let correo_error = $(".label-error-correo");
+
+    correo_error.hide();
+    txt_correo.change(function () {
+        let correo = $(this).val();
+        let valido = false;
+        let regex_val = correo_regex.test(correo);
+        let n_car = correo.length;
+
+        if(n_car > 0 && regex_val){
+            valido = true;
+        }
+
+        if(!valido){
+            correo_error.show();
+        } else {
+            correo_error.hide();
+        }
     });
 });
