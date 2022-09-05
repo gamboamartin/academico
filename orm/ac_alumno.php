@@ -12,7 +12,8 @@ class ac_alumno extends modelo{
             'dp_colonia_postal'=>'dp_calle_pertenece','dp_cp'=>'dp_colonia_postal','dp_municipio'=>'dp_cp',
             'dp_estado'=>'dp_municipio','dp_pais'=>'dp_estado', 'adm_estado_civil'=>$tabla,'adm_genero'=>$tabla,
             'adm_idioma'=>$tabla, );
-        $campos_obligatorios = array();
+        $campos_obligatorios = array('dp_calle_pertenece_id','ac_estado_alumno_id', 'adm_estado_civil_id',
+            'adm_genero_id', 'adm_idioma_id');
 
         $tipo_campos['telefono_fijo'] = 'telefono_mx';
         $tipo_campos['telefono_movil'] = 'telefono_mx';
