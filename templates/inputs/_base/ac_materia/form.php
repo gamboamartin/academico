@@ -6,6 +6,7 @@
 <?php echo $controlador->inputs->descripcion; ?>
 <?php echo $controlador->inputs->id_asignatura; ?>
 <?php echo $controlador->inputs->no_creditos; ?>
+<?php echo $controlador->inputs->clave; ?>
 
 
 <?php echo $controlador->inputs->select->ac_tipo_asignatura_id; ?>

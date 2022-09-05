@@ -36,6 +36,7 @@ class ac_materia_html extends html_controler {
         $controler->inputs->select = new stdClass();
         $controler->inputs->id_asignatura = $inputs->texts->id_asignatura;
         $controler->inputs->no_creditos = $inputs->texts->no_creditos;
+        $controler->inputs->clave = $inputs->texts->clave;
         $controler->inputs->select->ac_tipo_asignatura_id = $inputs->selects->ac_tipo_asignatura_id;
         $controler->inputs->select->ac_plan_estudio_id = $inputs->selects->ac_plan_estudio_id;
 
@@ -155,7 +156,13 @@ class ac_materia_html extends html_controler {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
+        $inputs->clave = $input;
+        $input = $this->clave(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
         $inputs->no_creditos = $input;
+
 
         $alta_inputs = new stdClass();
 
@@ -198,6 +205,23 @@ class ac_materia_html extends html_controler {
 
         $html =$this->directivas->input_text_required(disable: false,name: 'no_creditos',
             place_holder: 'No Creditos',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function clave(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        $html =$this->directivas->input_text_required(disable: false,name: 'clave',
+            place_holder: 'Clave',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }

@@ -77,7 +77,7 @@ class controlador_ac_materia extends system {
         $keys_row_lista = array();
 
         $keys = array('ac_materia_id', 'ac_materia_codigo', 'ac_materia_descripcion','ac_materia_id_asignatura',
-            'ac_materia_no_creditos', 'ac_tipo_asignatura_descripcion', 'ac_plan_estudio_descripcion');
+            'ac_materia_no_creditos', 'ac_tipo_asignatura_descripcion', 'ac_plan_estudio_descripcion','clave');
 
         foreach ($keys as $campo){
             $keys_row_lista = $this->key_row_lista_init(campo: $campo, keys_row_lista: $keys_row_lista);
