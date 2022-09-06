@@ -113,7 +113,7 @@ class ac_centro_educativo_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects, required:'true');
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
         }
