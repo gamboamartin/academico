@@ -264,7 +264,7 @@ class ac_alumno_html extends html_controler {
         $ac_turno_html = new ac_turno_html(html:$this->html_base);
 
         $select = $ac_turno_html->select_ac_turno_id(cols: 4, con_registros:true,
-            id_selected:-1,link: $link,required: true);
+            id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -273,7 +273,7 @@ class ac_alumno_html extends html_controler {
 
 
         $select = $this->select_dp_estado_nacimiento_id(cols: 6, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:-1,link: $link,required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -281,7 +281,7 @@ class ac_alumno_html extends html_controler {
         $selects->dp_estado_nacimiento_id = $select;
 
         $select = $this->select_adm_estado_civil_id(cols: 4, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:-1,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -390,7 +390,8 @@ class ac_alumno_html extends html_controler {
         return $selects;
     }
 
-    public function select_adm_estado_civil_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_adm_estado_civil_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                               bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -400,7 +401,7 @@ class ac_alumno_html extends html_controler {
         $modelo = new adm_estado_civil($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Estado Civil');
+            modelo: $modelo, label: 'Estado Civil', required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -442,7 +443,8 @@ class ac_alumno_html extends html_controler {
     }
 
     public function select_dp_estado_nacimiento_id(int $cols, bool $con_registros,int|null $id_selected, PDO $link,
-                                        bool $disabled = false, array $filtro = array()): array|string
+                                                   bool $disabled = false, array $filtro = array(),
+                                                   bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -458,7 +460,7 @@ class ac_alumno_html extends html_controler {
         }
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, disabled: $disabled, filtro: $filtro, label: 'Estado Nacimiento',
-            name: 'dp_estado_nacimiento_id');
+            name: 'dp_estado_nacimiento_id',required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
