@@ -289,7 +289,7 @@ class ac_alumno_html extends html_controler {
         $selects->adm_estado_civil_id = $select;
 
         $select = $this->select_adm_genero_id(cols: 6, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:-1,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -408,7 +408,8 @@ class ac_alumno_html extends html_controler {
         return $select;
     }
 
-    public function select_adm_genero_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_adm_genero_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                         bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -418,7 +419,7 @@ class ac_alumno_html extends html_controler {
         $modelo = new adm_genero($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Genero');
+            modelo: $modelo, label: 'Genero', required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
