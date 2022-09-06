@@ -113,7 +113,7 @@ class ac_centro_educativo_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects);
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $link,row:  $row_upd,selects:  $selects, required:'true');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
         }
@@ -178,7 +178,7 @@ class ac_centro_educativo_html extends html_controler {
         $modelo = new im_registro_patronal($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Registro Patronal');
+            modelo: $modelo, label: 'Registro Patronal', required:'true');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -196,7 +196,7 @@ class ac_centro_educativo_html extends html_controler {
         }
 
         $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+            value_vacio: $value_vacio, required:'true');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -220,7 +220,7 @@ class ac_centro_educativo_html extends html_controler {
         }
 
         $html =$this->directivas->input_text_required(disable: false,name: 'interior',place_holder: 'Num Int',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+            value_vacio: $value_vacio, required:'true');
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
