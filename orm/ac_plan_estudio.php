@@ -9,7 +9,7 @@ class ac_plan_estudio extends modelo{
     public function __construct(PDO $link){
         $tabla = __CLASS__;
         $columnas = array($tabla=>false,'ac_nivel'=>$tabla, 'ac_rvoe' => $tabla);
-        $campos_obligatorios = array();
+        $campos_obligatorios = array('ac_nivel_id', 'ac_rvoe_id');
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
