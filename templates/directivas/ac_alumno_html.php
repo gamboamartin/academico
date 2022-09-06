@@ -254,7 +254,7 @@ class ac_alumno_html extends html_controler {
         $ac_estado_alumno_html = new ac_estado_alumno_html(html:$this->html_base);
 
         $select = $ac_estado_alumno_html->select_ac_estado_alumno_id(cols: 4, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:-1,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -264,7 +264,7 @@ class ac_alumno_html extends html_controler {
         $ac_turno_html = new ac_turno_html(html:$this->html_base);
 
         $select = $ac_turno_html->select_ac_turno_id(cols: 4, con_registros:true,
-            id_selected:-1,link: $link);
+            id_selected:-1,link: $link,required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }

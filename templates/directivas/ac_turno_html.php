@@ -12,7 +12,8 @@ use stdClass;
 
 class ac_turno_html extends html_controler {
 
-    public function select_ac_turno_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_ac_turno_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                       bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -22,7 +23,7 @@ class ac_turno_html extends html_controler {
         $modelo = new ac_turno($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Turno');
+            modelo: $modelo, label: 'Turno', required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
