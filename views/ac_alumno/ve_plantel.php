@@ -11,23 +11,18 @@
                 </div>
             <div class="col-lg-12">
 
-                <?php echo $controlador->inputs->org_sucursal_id; ?>
-                <?php echo $controlador->inputs->org_sucursal_codigo; ?>
-                <?php echo $controlador->inputs->org_sucursal_codigo_bis; ?>
-                <?php echo $controlador->inputs->org_sucursal_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_tipo_sucursal_descricpion; ?>
-                <?php echo $controlador->inputs->org_sucursal_serie; ?>
-                <?php echo $controlador->inputs->org_sucursal_fecha_inicio_operaciones; ?>
-                <?php echo $controlador->inputs->org_sucursal_dp_estado_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_dp_municipio_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_dp_colonia_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_dp_cp_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_dp_calle_descripcion; ?>
-                <?php echo $controlador->inputs->org_sucursal_exterior; ?>
-                <?php echo $controlador->inputs->org_sucursal_interior; ?>
-                <?php echo $controlador->inputs->org_sucursal_telefono_1; ?>
-                <?php echo $controlador->inputs->org_sucursal_telefono_2; ?>
-                <?php echo $controlador->inputs->org_sucursal_telefono_3; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_id; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_codigo; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_codigo_bis; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_descripcion; ?>
+
+                <?php echo $controlador->inputs->ac_centro_educativo_dp_estado_descripcion; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_dp_municipio_descripcion; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_dp_colonia_descripcion; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_dp_cp_descripcion; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_dp_calle_descripcion; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_exterior; ?>
+                <?php echo $controlador->inputs->ac_centro_educativo_interior; ?>
             </div>
         </div>
     </div>

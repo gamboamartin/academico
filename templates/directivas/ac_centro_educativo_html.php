@@ -186,7 +186,8 @@ class ac_centro_educativo_html extends html_controler {
         return $select;
     }
 
-    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_exterior(int $cols, stdClass $row_upd, bool $value_vacio,
+                                   bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -196,8 +197,8 @@ class ac_centro_educativo_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'exterior',place_holder: 'Num Ext',
+            row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -210,7 +211,8 @@ class ac_centro_educativo_html extends html_controler {
         return $div;
     }
 
-    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    public function input_interior(int $cols, stdClass $row_upd, bool $value_vacio,
+                                   bool $disabled = false): array|string
     {
 
         if($cols<=0){
@@ -220,8 +222,8 @@ class ac_centro_educativo_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'interior',place_holder: 'Num Int',row_upd: $row_upd,
-            value_vacio: $value_vacio);
+        $html =$this->directivas->input_text_required(disable: $disabled,name: 'interior',place_holder: 'Num Int',
+            row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }

@@ -15,6 +15,7 @@ use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\ac_alumno_html;
+use html\ac_centro_educativo_html;
 use links\secciones\link_ac_alumno;
 use models\ac_alumno;
 use models\ac_alumno_pertenece;
@@ -327,6 +328,62 @@ class controlador_ac_alumno extends system {
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener planteles',data:  $planteles, header: $header,ws:$ws);
         }
+
+        $ac_centro_educativo_id = $planteles->registros[0]['ac_centro_educativo_id'];
+        $ac_centro_educativo = (new ac_centro_educativo($this->link))->registro(registro_id:$ac_centro_educativo_id,
+            retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener centro educativo',data:  $ac_centro_educativo,
+                header: $header,ws:$ws);
+        }
+
+        $html = (new ac_centro_educativo_html(html: $this->html_base));
+
+        $sucursal_codigo_disabled = $params->sucursal_codigo->disabled ?? true;
+
+        $ac_centro_educativo_codigo = $html->input_codigo(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $sucursal_codigo_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo select',data:  $ac_centro_educativo_codigo);
+        }
+
+        $sucursal_codigo_bis_disabled = $params->sucursal_codigo_bis->disabled ?? true;
+        $ac_centro_educativo_codigo_bis = $html->input_codigo_bis(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $sucursal_codigo_bis_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo_bis',
+                data:  $ac_centro_educativo_codigo_bis);
+        }
+
+        $sucursal_descripcion_disabled = $params->sucursal_descripcion->disabled ?? true;
+        $ac_centro_educativo_descripcion = $html->input_descripcion(cols: 12,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $sucursal_descripcion_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $ac_centro_educativo_descripcion);
+        }
+
+
+        $sucursal_exterior_disabled = $params->sucursal_exterior->disabled ?? true;
+        $ac_centro_educativo_exterior = $html->input_exterior(cols: 6, row_upd:  $ac_centro_educativo,
+            value_vacio: false, disabled: $sucursal_exterior_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_exterior',data:  $ac_centro_educativo_exterior);
+        }
+
+        $sucursal_interior_disabled = $params->sucursal_interior->disabled ?? true;
+        $ac_centro_educativo_interior = $html->input_interior(cols: 6, row_upd:  $ac_centro_educativo,
+            value_vacio: false, disabled: $sucursal_interior_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_interior',data:  $ac_centro_educativo_interior);
+        }
+
+
+        $this->inputs = new stdClass();
+        $this->inputs->ac_centro_educativo_codigo = $ac_centro_educativo_codigo;
+        $this->inputs->ac_centro_educativo_codigo_bis = $ac_centro_educativo_codigo_bis;
+        $this->inputs->ac_centro_educativo_descripcion = $ac_centro_educativo_descripcion;
+        $this->inputs->ac_centro_educativo_exterior = $ac_centro_educativo_exterior;
+        $this->inputs->ac_centro_educativo_interior = $ac_centro_educativo_interior;
 
         return $planteles;
     }
