@@ -18,7 +18,7 @@
 
                         <div class="control-group btn-alta">
                             <div class="controls">
-                                <button type="submit" class="btn btn-success" value="alumno_pertene" name="btn_action_next">Alta</button><br>
+                                <button type="submit" class="btn btn-success" value="asigna_plantel" name="btn_action_next">Alta</button><br>
                             </div>
                         </div>
 
