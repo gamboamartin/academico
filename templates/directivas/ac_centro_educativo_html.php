@@ -6,6 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
+use models\ac_centro_educativo;
 use models\base\limpieza;
 use models\im_registro_patronal;
 use PDO;
@@ -196,7 +197,7 @@ class ac_centro_educativo_html extends html_controler {
         }
 
         $html =$this->directivas->input_text_required(disable: false,name: 'exterior',place_holder: 'Num Ext',row_upd: $row_upd,
-            value_vacio: $value_vacio, required:'true');
+            value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -220,7 +221,7 @@ class ac_centro_educativo_html extends html_controler {
         }
 
         $html =$this->directivas->input_text_required(disable: false,name: 'interior',place_holder: 'Num Int',row_upd: $row_upd,
-            value_vacio: $value_vacio, required:'true');
+            value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }
@@ -231,5 +232,23 @@ class ac_centro_educativo_html extends html_controler {
         }
 
         return $div;
+    }
+
+    public function select_ac_centro_educativo_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                                  bool $required = false): array|string
+    {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+
+        $modelo = new ac_centro_educativo($link);
+
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo, label: 'Centro Educativo', required: $required);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select', data: $select);
+        }
+        return $select;
     }
 }

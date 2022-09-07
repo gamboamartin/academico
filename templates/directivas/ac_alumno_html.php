@@ -7,6 +7,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
+use models\ac_alumno;
 use models\adm_estado_civil;
 use models\adm_genero;
 use models\adm_idioma;
@@ -51,6 +52,14 @@ class ac_alumno_html extends html_controler {
         return $controler->inputs;
     }
 
+    protected function asigna_inputs_asigna_plantel(system $controler, stdClass $inputs): array|stdClass
+    {
+        $controler->inputs->select->ac_alumno_id = $inputs->selects->ac_alumno_id;
+        $controler->inputs->select->ac_centro_educativo_id = $inputs->selects->ac_centro_educativo_id;
+
+        return $controler->inputs;
+    }
+
     public function inputs_org_empresa(controlador_ac_alumno $controlador_org_empresa,
                                        stdClass $params = new stdClass()): array|stdClass
     {
@@ -76,6 +85,21 @@ class ac_alumno_html extends html_controler {
         }
 
         $inputs_asignados = $this->asigna_inputs(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
+        }
+
+        return $inputs_asignados;
+    }
+
+    public function genera_inputs_asigna_plantel(controlador_ac_alumno $controler,PDO $link): array|stdClass
+    {
+        $inputs = $this->init_asigna_plantel(link: $link, row_upd: $controler->row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+
+        $inputs_asignados = $this->asigna_inputs_asigna_plantel(controler:$controler, inputs: $inputs);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
         }
@@ -123,6 +147,20 @@ class ac_alumno_html extends html_controler {
         $alta_inputs->selects = $selects;
         $alta_inputs->texts = $texts;
         $alta_inputs->fecha = $fecha;
+
+        return $alta_inputs;
+    }
+
+    private function init_asigna_plantel(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        $selects = $this->selects_asigna_plantel(link: $link, row_upd: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+        }
+
+        $alta_inputs = new stdClass();
+
+        $alta_inputs->selects = $selects;
 
         return $alta_inputs;
     }
@@ -303,6 +341,34 @@ class ac_alumno_html extends html_controler {
         }
 
         $selects->adm_idioma_id = $select;
+
+        return $selects;
+    }
+
+    protected function selects_asigna_plantel(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        $selects = new stdClass();
+
+        $ac_alumno_html = new ac_alumno_html(html:$this->html_base);
+
+        $select = $ac_alumno_html->select_ac_alumno_id(cols: 6, con_registros:true,
+            id_selected:$row_upd->ac_alumno_id, link: $link, required: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_alumno_id = $select;
+
+        $ac_centro_educativo_html = new ac_centro_educativo_html(html:$this->html_base);
+
+        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 6, con_registros:true,
+            id_selected:$row_upd->ac_centro_educativo_id,link: $link, required: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_centro_educativo_id = $select;
+
 
         return $selects;
     }
@@ -731,5 +797,23 @@ class ac_alumno_html extends html_controler {
         }
 
         return $div;
+    }
+
+    public function select_ac_alumno_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                                  bool $required = false): array|string
+    {
+        $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar cols', data: $valida);
+        }
+
+        $modelo = new ac_alumno($link);
+
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
+            modelo: $modelo, label: 'Alumno', required: $required);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select', data: $select);
+        }
+        return $select;
     }
 }
