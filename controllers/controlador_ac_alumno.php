@@ -14,13 +14,14 @@ use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\ac_alumno_html;
+use links\secciones\link_ac_alumno;
 use models\ac_alumno;
 use models\ac_alumno_pertenece;
 use PDO;
 use stdClass;
 
 class controlador_ac_alumno extends system {
-
+    public string $link_ac_alumno_pertenece_alta_bd = '';
     public int $ac_alumno_id = -1;
     public stdClass $planteles ;
 
@@ -29,11 +30,20 @@ class controlador_ac_alumno extends system {
 
         $modelo = new ac_alumno(link: $link);
         $html_ = new ac_alumno_html($html);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new link_ac_alumno($this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Alumno';
 
+        $link_ac_alumno_pertenece_alta_bd = $obj_link->link_ac_alumno_pertenece_alta_bd(ac_alumno_id: $this->registro_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
+                data:  $link_ac_alumno_pertenece_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_ac_alumno_pertenece_alta_bd = $link_ac_alumno_pertenece_alta_bd;
+        
         $keys_row_lista = $this->keys_rows_lista();
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar keys de lista',data:  $keys_row_lista);
