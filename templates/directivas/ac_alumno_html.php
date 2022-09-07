@@ -54,7 +54,8 @@ class ac_alumno_html extends html_controler {
 
     protected function asigna_inputs_asigna_plantel(system $controler, stdClass $inputs): array|stdClass
     {
-        $controler->inputs->select->ac_alumno_id = $inputs->selects->ac_alumno_id;
+        $controler->inputs->select = new stdClass();
+
         $controler->inputs->select->ac_centro_educativo_id = $inputs->selects->ac_centro_educativo_id;
 
         return $controler->inputs;
@@ -349,20 +350,10 @@ class ac_alumno_html extends html_controler {
     {
         $selects = new stdClass();
 
-        $ac_alumno_html = new ac_alumno_html(html:$this->html_base);
-
-        $select = $ac_alumno_html->select_ac_alumno_id(cols: 6, con_registros:true,
-            id_selected:$row_upd->ac_alumno_id, link: $link, required: true);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
-        }
-
-        $selects->ac_alumno_id = $select;
-
         $ac_centro_educativo_html = new ac_centro_educativo_html(html:$this->html_base);
 
-        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 6, con_registros:true,
-            id_selected:$row_upd->ac_centro_educativo_id,link: $link, required: true);
+        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 12, con_registros:true,
+            id_selected:-1,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
@@ -800,7 +791,7 @@ class ac_alumno_html extends html_controler {
     }
 
     public function select_ac_alumno_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                                  bool $required = false): array|string
+                                        bool $disabled = false, bool $required = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -809,8 +800,8 @@ class ac_alumno_html extends html_controler {
 
         $modelo = new ac_alumno($link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Alumno', required: $required);
+        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros, id_selected:$id_selected,
+            modelo: $modelo,disabled: $disabled, label: 'Alumno', required: $required);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }

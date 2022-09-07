@@ -101,7 +101,27 @@ class controlador_ac_alumno extends system {
             die('Error');
         }
 
+        $select = $this->select_ac_alumno_id();
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al generar select datos',data:  $select,
+                header: $header,ws:$ws);
+        }
+
+
         return $r_modifica;
+    }
+
+    private function select_ac_alumno_id(): array|string
+    {
+        $select = (new ac_alumno_html(html: $this->html_base))->select_ac_alumno_id(cols:12,con_registros: true,
+            id_selected: $this->registro_id,link:  $this->link, disabled: true);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar select datos',data:  $select);
+        }
+        $this->inputs->select->ac_alumno_id = $select;
+
+        return $select;
     }
 
     public function modifica(bool $header, bool $ws = false, string $breadcrumbs = '', bool $aplica_form = true, bool $muestra_btn = true): array|string
