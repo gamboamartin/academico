@@ -185,12 +185,15 @@ class controlador_ac_alumno extends system {
 
         foreach ($planteles->registros as $indice=>$plantel){
 
+            $plantel['direccion'] = $plantel['dp_calle_descripcion'].' '.
+                $plantel['ac_centro_educativo_exterior'].' '. $plantel['ac_centro_educativo_interior'].' '.
+                $plantel['dp_colonia_descripcion'].' '. $plantel['dp_estado_descripcion'];
+
             $plantel = $this->data_plantel_btn(plantel:$plantel);
             if(errores::$error){
                 return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $plantel, header: $header,ws:$ws);
             }
             $planteles->registros[$indice] = $plantel;
-
         }
 
         $this->planteles = $planteles;

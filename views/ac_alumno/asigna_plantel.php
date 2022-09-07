@@ -44,7 +44,7 @@
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
                             <th>Fecha Ingreso</th>
-                            <th>Direccion</th>
+                            <th>Plantel</th>
 
                             <th>Ver</th>
                             <th>Modifica</th>
