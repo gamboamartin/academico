@@ -16,6 +16,7 @@ use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\ac_alumno_html;
 use html\ac_centro_educativo_html;
+use html\selects;
 use links\secciones\link_ac_alumno;
 use models\ac_alumno;
 use models\ac_alumno_pertenece;
@@ -339,51 +340,89 @@ class controlador_ac_alumno extends system {
 
         $html = (new ac_centro_educativo_html(html: $this->html_base));
 
-        $sucursal_codigo_disabled = $params->sucursal_codigo->disabled ?? true;
+        $centro_educativo_codigo_disabled = $params->centro_educativo_codigo->disabled ?? true;
 
         $ac_centro_educativo_codigo = $html->input_codigo(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
-            disabled: $sucursal_codigo_disabled);
+            disabled: $centro_educativo_codigo_disabled);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo select',data:  $ac_centro_educativo_codigo);
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_codigo select',data:  $ac_centro_educativo_codigo);
         }
 
-        $sucursal_codigo_bis_disabled = $params->sucursal_codigo_bis->disabled ?? true;
+        $centro_educativo_codigo_bis_disabled = $params->centro_educativo_codigo_bis->disabled ?? true;
         $ac_centro_educativo_codigo_bis = $html->input_codigo_bis(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
-            disabled: $sucursal_codigo_bis_disabled);
+            disabled: $centro_educativo_codigo_bis_disabled);
         if(errores::$error){
-            return $this->errores->error(mensaje: 'Error al obtener sucursal_codigo_bis',
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_codigo_bis',
                 data:  $ac_centro_educativo_codigo_bis);
         }
 
-        $sucursal_descripcion_disabled = $params->sucursal_descripcion->disabled ?? true;
+        $centro_educativo_descripcion_disabled = $params->centro_educativo_descripcion->disabled ?? true;
         $ac_centro_educativo_descripcion = $html->input_descripcion(cols: 12,row_upd:  $ac_centro_educativo, value_vacio: false,
-            disabled: $sucursal_descripcion_disabled);
+            disabled: $centro_educativo_descripcion_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $ac_centro_educativo_descripcion);
         }
 
 
-        $sucursal_exterior_disabled = $params->sucursal_exterior->disabled ?? true;
+        $centro_educativo_exterior_disabled = $params->centro_educativo_exterior->disabled ?? true;
         $ac_centro_educativo_exterior = $html->input_exterior(cols: 6, row_upd:  $ac_centro_educativo,
-            value_vacio: false, disabled: $sucursal_exterior_disabled);
+            value_vacio: false, disabled: $centro_educativo_exterior_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_exterior',data:  $ac_centro_educativo_exterior);
         }
 
-        $sucursal_interior_disabled = $params->sucursal_interior->disabled ?? true;
+        $centro_educativo_interior_disabled = $params->centro_educativo_interior->disabled ?? true;
         $ac_centro_educativo_interior = $html->input_interior(cols: 6, row_upd:  $ac_centro_educativo,
-            value_vacio: false, disabled: $sucursal_interior_disabled);
+            value_vacio: false, disabled: $centro_educativo_interior_disabled);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_interior',data:  $ac_centro_educativo_interior);
         }
 
+        $centro_educativo_id_disabled = $params->ac_centro_educativo_id->disabled ?? true;
+        $ac_centro_educativo_id = $html->input_id(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $centro_educativo_id_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_id select',data:  $ac_centro_educativo_id);
+        }
+
+
+        $selects = new stdClass();
+
+        $params = new stdClass();
+        $params->dp_pais_id = new stdClass();
+        $params->dp_pais_id->disabled = true;
+        $params->dp_estado_id = new stdClass();
+        $params->dp_estado_id->disabled = true;
+        $params->dp_municipio_id = new stdClass();
+        $params->dp_municipio_id->disabled = true;
+        $params->dp_cp_id = new stdClass();
+        $params->dp_cp_id->disabled = true;
+        $params->dp_colonia_postal_id = new stdClass();
+        $params->dp_colonia_postal_id->disabled = true;
+        $params->dp_calle_pertenece_id = new stdClass();
+        $params->dp_calle_pertenece_id->disabled = true;
+
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $this->link,row:  $ac_centro_educativo,
+            selects:  $selects,params: $params);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
+        }
 
         $this->inputs = new stdClass();
+        $this->inputs->select = new stdClass();
+        $this->inputs->ac_centro_educativo_id = $ac_centro_educativo_id;
         $this->inputs->ac_centro_educativo_codigo = $ac_centro_educativo_codigo;
         $this->inputs->ac_centro_educativo_codigo_bis = $ac_centro_educativo_codigo_bis;
         $this->inputs->ac_centro_educativo_descripcion = $ac_centro_educativo_descripcion;
         $this->inputs->ac_centro_educativo_exterior = $ac_centro_educativo_exterior;
         $this->inputs->ac_centro_educativo_interior = $ac_centro_educativo_interior;
+
+        $this->inputs->select->dp_pais_id = $selects->dp_pais_id;
+        $this->inputs->select->dp_estado_id = $selects->dp_estado_id;
+        $this->inputs->select->dp_municipio_id = $selects->dp_municipio_id;
+        $this->inputs->select->dp_cp_id = $selects->dp_cp_id;
+        $this->inputs->select->dp_colonia_postal_id = $selects->dp_colonia_postal_id;
+        $this->inputs->select->dp_calle_pertenece_id = $selects->dp_calle_pertenece_id;
 
         return $planteles;
     }

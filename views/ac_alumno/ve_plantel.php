@@ -16,13 +16,15 @@
                 <?php echo $controlador->inputs->ac_centro_educativo_codigo_bis; ?>
                 <?php echo $controlador->inputs->ac_centro_educativo_descripcion; ?>
 
-                <?php echo $controlador->inputs->ac_centro_educativo_dp_estado_descripcion; ?>
-                <?php echo $controlador->inputs->ac_centro_educativo_dp_municipio_descripcion; ?>
-                <?php echo $controlador->inputs->ac_centro_educativo_dp_colonia_descripcion; ?>
-                <?php echo $controlador->inputs->ac_centro_educativo_dp_cp_descripcion; ?>
-                <?php echo $controlador->inputs->ac_centro_educativo_dp_calle_descripcion; ?>
                 <?php echo $controlador->inputs->ac_centro_educativo_exterior; ?>
                 <?php echo $controlador->inputs->ac_centro_educativo_interior; ?>
+                <?php echo $controlador->inputs->select->dp_pais_id?>
+                <?php echo $controlador->inputs->select->dp_estado_id?>
+                <?php echo $controlador->inputs->select->dp_municipio_id?>
+                <?php echo $controlador->inputs->select->dp_cp_id?>
+                <?php echo $controlador->inputs->select->dp_colonia_postal_id?>
+                <?php echo $controlador->inputs->select->dp_calle_pertenece_id?>
+
             </div>
         </div>
     </div>
