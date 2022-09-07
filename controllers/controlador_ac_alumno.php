@@ -18,6 +18,7 @@ use html\ac_alumno_html;
 use links\secciones\link_ac_alumno;
 use models\ac_alumno;
 use models\ac_alumno_pertenece;
+use models\ac_centro_educativo;
 use PDO;
 use stdClass;
 
@@ -312,4 +313,22 @@ class controlador_ac_alumno extends system {
         }
         return $registros;
     }
+
+    public function ve_plantel(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $keys = array('ac_alumno_id','registro_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $_GET);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al validar GET',data:  $valida, header: $header,ws:$ws);
+        }
+
+        $planteles = (new ac_alumno_pertenece($this->link))->planteles(ac_alumno_id: $_GET['ac_alumno_id']);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener planteles',data:  $planteles, header: $header,ws:$ws);
+        }
+
+        return $planteles;
+    }
+
 }
