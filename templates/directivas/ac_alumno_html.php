@@ -54,6 +54,8 @@ class ac_alumno_html extends html_controler {
 
     protected function asigna_inputs_asigna_plantel(system $controler, stdClass $inputs): array|stdClass
     {
+        $controler->inputs->fecha_ingreso = $inputs->fecha->fecha_ingreso;
+
         $controler->inputs->select = new stdClass();
 
         $controler->inputs->select->ac_centro_educativo_id = $inputs->selects->ac_centro_educativo_id;
@@ -159,9 +161,17 @@ class ac_alumno_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
         }
 
+        $fecha_nac = $this->fec_fecha_ingreso(cols: 6, row_upd: new stdClass(), value_vacio: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar fecha',data:  $fecha_nac);
+        }
+        $fecha = new stdClass();
+        $fecha->fecha_ingreso = $fecha_nac;
+
         $alta_inputs = new stdClass();
 
         $alta_inputs->selects = $selects;
+        $alta_inputs->fecha = $fecha;
 
         return $alta_inputs;
     }
@@ -352,7 +362,7 @@ class ac_alumno_html extends html_controler {
 
         $ac_centro_educativo_html = new ac_centro_educativo_html(html:$this->html_base);
 
-        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 12, con_registros:true,
+        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 6, con_registros:true,
             id_selected:-1,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
@@ -778,6 +788,30 @@ class ac_alumno_html extends html_controler {
 
         $html =$this->directivas->fecha_required(disable: false,name: 'fecha_nacimiento',
             place_holder: 'Fecha nacimiento',row_upd: $row_upd, value_vacio: $value_vacio);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input', data: $html);
+        }
+
+        $div = $this->directivas->html->div_group(cols: $cols,html:  $html);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar div', data: $div);
+        }
+
+        return $div;
+    }
+
+    public function fec_fecha_ingreso(int $cols, stdClass $row_upd, bool $value_vacio): array|string
+    {
+
+        if($cols<=0){
+            return $this->error->error(mensaje: 'Error cold debe ser mayor a 0', data: $cols);
+        }
+        if($cols>=13){
+            return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
+        }
+
+        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_ingreso',
+            place_holder: 'Fecha ingreso',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
         }

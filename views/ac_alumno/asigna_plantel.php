@@ -14,6 +14,7 @@
                     <?php echo $controlador->inputs->select->ac_alumno_id; ?>
 
                     <?php echo $controlador->inputs->select->ac_centro_educativo_id; ?>
+                    <?php echo $controlador->inputs->fecha_ingreso; ?>
 
                         <div class="control-group btn-alta">
                             <div class="controls">
