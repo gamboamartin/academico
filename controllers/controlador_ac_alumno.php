@@ -332,7 +332,7 @@ class controlador_ac_alumno extends system {
 
         $ac_centro_educativo_id = $planteles->registros[0]['ac_centro_educativo_id'];
         $ac_centro_educativo = (new ac_centro_educativo($this->link))->registro(registro_id:$ac_centro_educativo_id,
-            retorno_obj: true);
+            columnas_en_bruto: true, retorno_obj: true);
         if(errores::$error){
             return $this->retorno_error(mensaje: 'Error al obtener centro educativo',data:  $ac_centro_educativo,
                 header: $header,ws:$ws);
@@ -385,6 +385,13 @@ class controlador_ac_alumno extends system {
             return $this->errores->error(mensaje: 'Error al obtener centro_educativo_id select',data:  $ac_centro_educativo_id);
         }
 
+        $ac_centro_id = $planteles->registros[0]['ac_centro_educativo_id'];
+        $ac_centro_educativo = (new ac_centro_educativo($this->link))->registro(registro_id:$ac_centro_id,
+            retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener centro educativo',data:  $ac_centro_educativo,
+                header: $header,ws:$ws);
+        }
 
         $selects = new stdClass();
 
