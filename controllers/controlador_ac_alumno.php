@@ -15,10 +15,14 @@ use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 use html\ac_alumno_html;
 use models\ac_alumno;
+use models\ac_alumno_pertenece;
 use PDO;
 use stdClass;
 
 class controlador_ac_alumno extends system {
+
+    public int $ac_alumno_id = -1;
+    public stdClass $planteles ;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -37,6 +41,8 @@ class controlador_ac_alumno extends system {
             exit;
         }
         $this->keys_row_lista = $keys_row_lista;
+
+        $this->ac_alumno_id = $this->registro_id;
     }
 
     private function keys_rows_lista(): array
@@ -107,9 +113,59 @@ class controlador_ac_alumno extends system {
                 header: $header,ws:$ws);
         }
 
+        $planteles = (new ac_alumno_pertenece($this->link))->planteles(ac_alumno_id: $this->ac_alumno_id);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener planteles',data:  $planteles, header: $header,ws:$ws);
+        }
+
+        foreach ($planteles->registros as $indice=>$plantel){
+
+            $plantel = $this->data_plantel_btn(plantel:$plantel);
+            if(errores::$error){
+                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $plantel, header: $header,ws:$ws);
+            }
+            $planteles->registros[$indice] = $plantel;
+
+        }
+
+        $this->planteles = $planteles;
+
 
         return $r_modifica;
     }
+
+    private function data_plantel_btn(array $plantel): array
+    {
+
+        $params['ac_alumno_id'] = $plantel['ac_alumno_id'];
+
+        $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
+            registro_id:  $plantel['ac_alumno_pertenece_id'], seccion: 'ac_alumno_pertenece',style:  'danger');
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $plantel['link_elimina'] = $btn_elimina;
+
+
+        $btn_modifica = $this->html_base->button_href(accion:'modifica_plantel',etiqueta:  'Modifica',
+            registro_id:  $plantel['ac_alumno_id'], seccion: 'ac_alumno',style:  'warning', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $plantel['link_modifica'] = $btn_modifica;
+
+        $btn_ve = $this->html_base->button_href(accion:'ve_plantel',etiqueta:  'Ver',
+            registro_id:  $plantel['ac_alumno_id'], seccion: 'ac_alumno',style:  'info', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $plantel['link_ve'] = $btn_ve;
+        return $plantel;
+    }
+
 
     private function select_ac_alumno_id(): array|string
     {

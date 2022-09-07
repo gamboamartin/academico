@@ -50,27 +50,27 @@
                             <th>Elimina</th>
 
                             <tbody>
-                            <?php foreach ($controlador->alumnos->registros as $alumno){
+                            <?php foreach ($controlador->planteles->registros as $plantel){
                                 ?>
                             <tr>
-                                <td><?php echo $alumno['ac_alumno_pertenece_id']; ?></td>
-                                <td><?php echo $alumno['ac_alumno_matricula']; ?></td>
-                                <td><?php echo $alumno['ac_alumno_nombre']; ?></td>
-                                <td><?php echo $alumno['ac_alumno_apellido_paterno']; ?></td>
-                                <td><?php echo $alumno['ac_alumno_apellido_materno']; ?></td>
-                                <td><?php echo $alumno['ac_alumno_pertenece_fecha_ingreso']; ?></td>
-                                <td><?php echo $alumno['direccion']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_pertenece_id']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_matricula']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_nombre']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_apellido_paterno']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_apellido_materno']; ?></td>
+                                <td><?php echo $plantel['ac_alumno_pertenece_fecha_ingreso']; ?></td>
+                                <td><?php echo $plantel['direccion']; ?></td>
 
-                                <td><?php echo $alumno['link_ve']; ?></td>
-                                <td><?php echo $alumno['link_modifica']; ?></td>
-                                <td><?php echo $alumno['link_elimina']; ?></td>
+                                <td><?php echo $plantel['link_ve']; ?></td>
+                                <td><?php echo $plantel['link_modifica']; ?></td>
+                                <td><?php echo $plantel['link_elimina']; ?></td>
 
                             </tr>
                             <?php } ?>
                             </tbody>
                         </table>
                         <div class="box-body">
-                            * Total registros: <?php echo $controlador->sucursales->n_registros; ?><br />
+                            * Total registros: <?php echo $controlador->planteles->n_registros; ?><br />
                             * Fecha Hora: <?php echo $controlador->fecha_hoy; ?>
                         </div>
                     </div>
