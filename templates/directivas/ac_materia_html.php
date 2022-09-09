@@ -101,17 +101,23 @@ class ac_materia_html extends html_controler {
 
         $row_upd = new stdClass();
 
-        $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  true);
+        $input = $this->id_asignatura(cols: 4,row_upd: $row_upd,value_vacio:  true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_asignatura = $input;
 
-        $input = $this->no_creditos(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->no_creditos(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->no_creditos = $input;
+        
+        $input = $this->clave(cols: 4,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->clave = $input;
 
         $alta_inputs = new stdClass();
 
@@ -146,22 +152,23 @@ class ac_materia_html extends html_controler {
 
         $selects->ac_plan_estudio_id = $select;
 
-        $input = $this->id_asignatura(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->id_asignatura(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->id_asignatura = $input;
         
-        $input = $this->no_creditos(cols: 12,row_upd: $row_upd,value_vacio:  false);
-        if(errores::$error){
-            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
-        }
-        $inputs->clave = $input;
-        $input = $this->clave(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        $input = $this->no_creditos(cols: 4,row_upd: $row_upd,value_vacio:  false);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->no_creditos = $input;
+
+        $input = $this->clave(cols: 4,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->clave = $input;
 
 
         $alta_inputs = new stdClass();
