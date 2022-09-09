@@ -37,6 +37,7 @@ class ac_materia_html extends html_controler {
         $controler->inputs->id_asignatura = $inputs->texts->id_asignatura;
         $controler->inputs->no_creditos = $inputs->texts->no_creditos;
         $controler->inputs->clave = $inputs->texts->clave;
+        $controler->inputs->descripcion = $inputs->texts->descripcion;
         $controler->inputs->select->ac_tipo_asignatura_id = $inputs->selects->ac_tipo_asignatura_id;
         $controler->inputs->select->ac_plan_estudio_id = $inputs->selects->ac_plan_estudio_id;
 
@@ -170,6 +171,11 @@ class ac_materia_html extends html_controler {
         }
         $inputs->clave = $input;
 
+        $input = $this->input_descripcion(cols: 8,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->descripcion = $input;
 
         $alta_inputs = new stdClass();
 
