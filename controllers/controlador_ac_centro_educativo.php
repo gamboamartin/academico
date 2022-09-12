@@ -77,7 +77,7 @@ class controlador_ac_centro_educativo extends system {
         $keys_row_lista = array();
 
         $keys = array('ac_centro_educativo_id', 'ac_centro_educativo_codigo','ac_centro_educativo_descripcion',
-            'im_registro_patronal_descripcion', 'dp_calle_descripcion', 'ac_centro_educativo_exterior',
+            'im_registro_patronal_descripcion', 'ac_centro_educativo_exterior',
             'ac_centro_educativo_interior');
 
         foreach ($keys as $campo){
