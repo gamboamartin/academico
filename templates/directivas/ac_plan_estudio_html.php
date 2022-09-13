@@ -293,7 +293,7 @@ class ac_plan_estudio_html extends html_controler {
         $ac_centro_educativo_html = new ac_centro_educativo_html(html:$this->html_base);
 
         $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 6, con_registros:true,
-            id_selected:-1,link: $link, required: true);
+            id_selected:$row_upd->ac_centro_educativo_id,link: $link, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }

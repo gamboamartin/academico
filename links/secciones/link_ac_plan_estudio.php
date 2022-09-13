@@ -19,5 +19,17 @@ class link_ac_plan_estudio extends links_menu {
 
         return $link;
     }
+    
+    public function link_ac_plan_estudio_pertenece_modifica_bd(int $ac_plan_estudio_id): string
+    {
+
+        $link = $this->link_con_id(accion:'modifica_plan_estudio_pertenece_bd', registro_id: $ac_plan_estudio_id,
+            seccion:  'ac_plan_estudio');
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar link', data: $link);
+        }
+
+        return $link;
+    }
 
 }
