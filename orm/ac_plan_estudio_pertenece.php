@@ -46,4 +46,17 @@ class ac_plan_estudio_pertenece extends modelo{
         }
         return $r_ac_plan_estudio;
     }
+
+    public function planes_estudios(int $ac_centro_educativo_id): array|stdClass
+    {
+        if($ac_centro_educativo_id <=0){
+            return $this->error->error(mensaje: 'Error $ac_plan_estudio_id debe ser mayor a 0', data: $ac_centro_educativo_id);
+        }
+        $filtro['ac_centro_educativo.id'] = $ac_centro_educativo_id;
+        $r_ac_centro_educativo = $this->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener planteles', data: $r_ac_centro_educativo);
+        }
+        return $r_ac_centro_educativo;
+    }
 }
