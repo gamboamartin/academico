@@ -19,6 +19,21 @@ class ac_plan_estudio_pertenece extends modelo{
             columnas: $columnas);
     }
 
+    public function alta_bd(): array|stdClass
+    {
+        if(!isset($this->registro['codigo'])){
+            $this->registro['codigo'] = $this->registro['ac_centro_educativo_id'].' - '.
+                $this->registro['ac_plan_estudio_id'];
+        }
+
+        $r_alta_bd = parent::alta_bd();
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al insertar registro', data: $r_alta_bd);
+        }
+
+        return $r_alta_bd;
+    }
+
     public function centros_educativos(int $ac_plan_estudio_id): array|stdClass
     {
         if($ac_plan_estudio_id <=0){
