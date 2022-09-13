@@ -11,9 +11,8 @@
                         <?php include (new views())->ruta_templates."head/subtitulo.php"; ?>
                         <?php include (new views())->ruta_templates."mensajes.php"; ?>
 
-                    <?php echo $controlador->inputs->select->ac_plan_estudio_id; ?>
-
-                    <?php echo $controlador->inputs->select->ac_centro_educativo_id; ?>
+                        <?php echo $controlador->inputs->select->ac_centro_educativo_id; ?>
+                        <?php echo $controlador->inputs->select->ac_plan_estudio_id; ?>
 
                         <div class="control-group btn-alta">
                             <div class="controls">
