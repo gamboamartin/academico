@@ -13,8 +13,11 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\actions;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
+use html\ac_centro_educativo_html;
 use html\ac_plan_estudio_html;
+use html\selects;
 use links\secciones\link_ac_plan_estudio;
+use models\ac_centro_educativo;
 use models\ac_plan_estudio;
 use models\ac_plan_estudio_pertenece;
 use PDO;
@@ -309,5 +312,124 @@ class controlador_ac_plan_estudio extends system {
         }
         $centro_educativo['link_ve'] = $btn_ve;
         return $centro_educativo;
+    }
+
+    public function ve_centro_educativo(bool $header, bool $ws = false): array|stdClass
+    {
+
+        $keys = array('ac_plan_estudio_id','registro_id');
+        $valida = $this->validacion->valida_ids(keys: $keys, registro: $_GET);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al validar GET',data:  $valida, header: $header,ws:$ws);
+        }
+
+        $planteles = (new ac_plan_estudio_pertenece($this->link))->centros_educativos(ac_plan_estudio_id:
+            $_GET['ac_plan_estudio_id']);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener planteles',data:  $planteles, header: $header,ws:$ws);
+        }
+
+        $ac_centro_educativo_id = $planteles->registros[0]['ac_centro_educativo_id'];
+        $ac_centro_educativo = (new ac_centro_educativo($this->link))->registro(registro_id:$ac_centro_educativo_id,
+            columnas_en_bruto: true, retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener centro educativo',data:  $ac_centro_educativo,
+                header: $header,ws:$ws);
+        }
+
+        $html = (new ac_centro_educativo_html(html: $this->html_base));
+
+        $centro_educativo_codigo_disabled = $params->centro_educativo_codigo->disabled ?? true;
+
+        $ac_centro_educativo_codigo = $html->input_codigo(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $centro_educativo_codigo_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_codigo select',data:  $ac_centro_educativo_codigo);
+        }
+
+        $centro_educativo_codigo_bis_disabled = $params->centro_educativo_codigo_bis->disabled ?? true;
+        $ac_centro_educativo_codigo_bis = $html->input_codigo_bis(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $centro_educativo_codigo_bis_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_codigo_bis',
+                data:  $ac_centro_educativo_codigo_bis);
+        }
+
+        $centro_educativo_descripcion_disabled = $params->centro_educativo_descripcion->disabled ?? true;
+        $ac_centro_educativo_descripcion = $html->input_descripcion(cols: 12,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $centro_educativo_descripcion_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener descripcion',data:  $ac_centro_educativo_descripcion);
+        }
+
+
+        $centro_educativo_exterior_disabled = $params->centro_educativo_exterior->disabled ?? true;
+        $ac_centro_educativo_exterior = $html->input_exterior(cols: 6, row_upd:  $ac_centro_educativo,
+            value_vacio: false, disabled: $centro_educativo_exterior_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_exterior',data:  $ac_centro_educativo_exterior);
+        }
+
+        $centro_educativo_interior_disabled = $params->centro_educativo_interior->disabled ?? true;
+        $ac_centro_educativo_interior = $html->input_interior(cols: 6, row_upd:  $ac_centro_educativo,
+            value_vacio: false, disabled: $centro_educativo_interior_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener $ac_centro_educativo_interior',data:  $ac_centro_educativo_interior);
+        }
+
+        $centro_educativo_id_disabled = $params->ac_centro_educativo_id->disabled ?? true;
+        $ac_centro_educativo_id = $html->input_id(cols: 4,row_upd:  $ac_centro_educativo, value_vacio: false,
+            disabled: $centro_educativo_id_disabled);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al obtener centro_educativo_id select',data:  $ac_centro_educativo_id);
+        }
+
+        $ac_centro_id = $planteles->registros[0]['ac_centro_educativo_id'];
+        $ac_centro_educativo = (new ac_centro_educativo($this->link))->registro(registro_id:$ac_centro_id,
+            retorno_obj: true);
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al obtener centro educativo',data:  $ac_centro_educativo,
+                header: $header,ws:$ws);
+        }
+
+        $selects = new stdClass();
+
+        $params = new stdClass();
+        $params->dp_pais_id = new stdClass();
+        $params->dp_pais_id->disabled = true;
+        $params->dp_estado_id = new stdClass();
+        $params->dp_estado_id->disabled = true;
+        $params->dp_municipio_id = new stdClass();
+        $params->dp_municipio_id->disabled = true;
+        $params->dp_cp_id = new stdClass();
+        $params->dp_cp_id->disabled = true;
+        $params->dp_colonia_postal_id = new stdClass();
+        $params->dp_colonia_postal_id->disabled = true;
+        $params->dp_calle_pertenece_id = new stdClass();
+        $params->dp_calle_pertenece_id->disabled = true;
+
+        $selects = (new selects())->direcciones(html: $this->html_base,link:  $this->link,row:  $ac_centro_educativo,
+            selects:  $selects,params: $params);
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar selects de domicilios',data:  $selects);
+        }
+
+        $this->inputs = new stdClass();
+        $this->inputs->select = new stdClass();
+        $this->inputs->ac_centro_educativo_id = $ac_centro_educativo_id;
+        $this->inputs->ac_centro_educativo_codigo = $ac_centro_educativo_codigo;
+        $this->inputs->ac_centro_educativo_codigo_bis = $ac_centro_educativo_codigo_bis;
+        $this->inputs->ac_centro_educativo_descripcion = $ac_centro_educativo_descripcion;
+        $this->inputs->ac_centro_educativo_exterior = $ac_centro_educativo_exterior;
+        $this->inputs->ac_centro_educativo_interior = $ac_centro_educativo_interior;
+
+        $this->inputs->select->dp_pais_id = $selects->dp_pais_id;
+        $this->inputs->select->dp_estado_id = $selects->dp_estado_id;
+        $this->inputs->select->dp_municipio_id = $selects->dp_municipio_id;
+        $this->inputs->select->dp_cp_id = $selects->dp_cp_id;
+        $this->inputs->select->dp_colonia_postal_id = $selects->dp_colonia_postal_id;
+        $this->inputs->select->dp_calle_pertenece_id = $selects->dp_calle_pertenece_id;
+
+        return $planteles;
     }
 }
