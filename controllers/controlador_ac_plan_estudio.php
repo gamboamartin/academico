@@ -10,12 +10,10 @@ namespace gamboamartin\academico\controllers;
 
 
 use gamboamartin\errores\errores;
-use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
-use html\ac_centro_educativo_html;
 use html\ac_plan_estudio_html;
-use models\ac_centro_educativo;
+use links\secciones\link_ac_plan_estudio;
 use models\ac_plan_estudio;
 use models\ac_plan_estudio_pertenece;
 use PDO;
@@ -24,16 +22,29 @@ use stdClass;
 class controlador_ac_plan_estudio extends system {
     public stdClass $centros_educativos;
     public int $ac_plan_estudio_id = -1;
+    public string $link_ac_plan_estudio_pertenece_alta_bd = '';
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
 
         $modelo = new ac_plan_estudio(link: $link);
         $html_ = new ac_plan_estudio_html($html);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new link_ac_plan_estudio($this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Plan Estudio';
+
+
+        $link_ac_plan_estudio_pertenece_alta_bd = $obj_link->link_ac_plan_estudio_pertenece_alta_bd(
+            ac_plan_estudio_id: $this->registro_id);
+        if(errores::$error){
+            $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
+                data:  $link_ac_plan_estudio_pertenece_alta_bd);
+            print_r($error);
+            exit;
+        }
+        $this->link_ac_plan_estudio_pertenece_alta_bd = $link_ac_plan_estudio_pertenece_alta_bd;
+
 
         $keys_row_lista = $this->keys_rows_lista();
         if(errores::$error){
