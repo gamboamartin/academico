@@ -14,7 +14,8 @@ use stdClass;
 
 class ac_plan_estudio_html extends html_controler {
 
-    public function select_ac_plan_estudio_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_ac_plan_estudio_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                              bool $disabled = false): array|string
     {
         $valida = (new directivas(html:$this->html_base))->valida_cols(cols:$cols);
         if(errores::$error){
@@ -24,7 +25,7 @@ class ac_plan_estudio_html extends html_controler {
         $modelo = new ac_plan_estudio($link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Plan Estudio');
+            modelo: $modelo, label: 'Plan Estudio', disabled: $disabled);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
@@ -39,6 +40,15 @@ class ac_plan_estudio_html extends html_controler {
         $controler->inputs->calificacion_min_aprobacion = $inputs->texts->calificacion_min_aprobacion;
         $controler->inputs->select->ac_nivel_id = $inputs->selects->ac_nivel_id;
         $controler->inputs->select->ac_rvoe_id = $inputs->selects->ac_rvoe_id;
+
+        return $controler->inputs;
+    }
+
+    protected function asigna_inputs_asigna_centro_educativo(system $controler, stdClass $inputs): array|stdClass
+    {
+        $controler->inputs->select = new stdClass();
+
+        $controler->inputs->select->ac_centro_educativo_id = $inputs->selects->ac_centro_educativo_id;
 
         return $controler->inputs;
     }
@@ -244,5 +254,53 @@ class ac_plan_estudio_html extends html_controler {
         }
 
         return $div;
+    }
+
+    public function genera_inputs_asigna_centro_educativo(controlador_ac_plan_estudio $controler,PDO $link): array|stdClass
+    {
+        $inputs = $this->init_asigna_centro_educativo(link: $link, row_upd: $controler->row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
+        }
+
+        $inputs_asignados = $this->asigna_inputs_asigna_centro_educativo(controler:$controler, inputs: $inputs);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al asignar inputs',data:  $inputs_asignados);
+        }
+
+        return $inputs_asignados;
+    }
+
+    private function init_asigna_centro_educativo(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        $selects = $this->selects_asigna_centro_educativo(link: $link, row_upd: $row_upd);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar selects',data:  $selects);
+        }
+
+        $alta_inputs = new stdClass();
+
+        $alta_inputs->selects = $selects;
+
+        return $alta_inputs;
+    }
+
+
+    protected function selects_asigna_centro_educativo(PDO $link, stdClass $row_upd): array|stdClass
+    {
+        $selects = new stdClass();
+
+        $ac_centro_educativo_html = new ac_centro_educativo_html(html:$this->html_base);
+
+        $select = $ac_centro_educativo_html->select_ac_centro_educativo_id(cols: 6, con_registros:true,
+            id_selected:-1,link: $link, required: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+
+        $selects->ac_centro_educativo_id = $select;
+
+
+        return $selects;
     }
 }
