@@ -22,6 +22,8 @@ use PDO;
 use stdClass;
 
 class controlador_ac_plan_estudio extends system {
+    public stdClass $centros_educativos;
+    public int $ac_plan_estudio_id = -1;
 
     public function __construct(PDO $link, html $html = new \gamboamartin\template_1\html(),
                                 stdClass $paths_conf = new stdClass()){
@@ -40,6 +42,8 @@ class controlador_ac_plan_estudio extends system {
             exit;
         }
         $this->keys_row_lista = $keys_row_lista;
+
+        $this->ac_plan_estudio_id = $this->registro_id;
     }
 
     public function alta(bool $header, bool $ws = false): array|string
@@ -191,27 +195,60 @@ class controlador_ac_plan_estudio extends system {
                 header: $header,ws:$ws);
         }
 
-        /*$planteles = (new ac_plan_estudio_pertenece($this->link))->planteles(ac_alumno_id: $this->ac_alumno_id);
+        $centros_educativos = (new ac_plan_estudio_pertenece($this->link))->centros_educativos(
+            ac_plan_estudio_id: $this->ac_plan_estudio_id);
         if(errores::$error){
-            return $this->retorno_error(mensaje: 'Error al obtener planteles',data:  $planteles, header: $header,ws:$ws);
+            return $this->retorno_error(mensaje: 'Error al obtener centros_educativos',data:  $centros_educativos, header: $header,ws:$ws);
         }
 
-        foreach ($planteles->registros as $indice=>$plantel){
+        foreach ($centros_educativos->registros as $indice=>$centro_educativo){
 
-            $plantel['direccion'] = $plantel['dp_calle_descripcion'].' '.
-                $plantel['ac_centro_educativo_exterior'].' '. $plantel['ac_centro_educativo_interior'].' '.
-                $plantel['dp_colonia_descripcion'].' '. $plantel['dp_estado_descripcion'];
+            $centro_educativo['direccion'] = $centro_educativo['dp_calle_descripcion'].' '.
+                $centro_educativo['ac_centro_educativo_exterior'].' '. $centro_educativo['ac_centro_educativo_interior'].' '.
+                $centro_educativo['dp_colonia_descripcion'].' '. $centro_educativo['dp_estado_descripcion'];
 
-            $plantel = $this->data_centro_educativo_btn(plantel:$plantel);
+            $centro_educativo = $this->data_centro_educativo_btn(centro_educativo:$centro_educativo);
             if(errores::$error){
-                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $plantel, header: $header,ws:$ws);
+                return $this->retorno_error(mensaje: 'Error al asignar botones',data:  $centro_educativo, header: $header,ws:$ws);
             }
-            $planteles->registros[$indice] = $plantel;
+            $centros_educativos->registros[$indice] = $centro_educativo;
         }
 
-        $this->planteles = $planteles;*/
+        $this->centros_educativos = $centros_educativos;
 
 
         return $r_modifica;
+    }
+
+    private function data_centro_educativo_btn(array $centro_educativo): array
+    {
+
+        $params['ac_plan_estudio_id'] = $centro_educativo['ac_plan_estudio_id'];
+
+        $btn_elimina = $this->html_base->button_href(accion:'elimina_bd',etiqueta:  'Elimina',
+            registro_id:  $centro_educativo['ac_plan_estudio_pertenece_id'], seccion: 'ac_plan_estudio_pertenece',style:  'danger');
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $centro_educativo['link_elimina'] = $btn_elimina;
+
+
+        $btn_modifica = $this->html_base->button_href(accion:'modifica_centro_educativo',etiqueta:  'Modifica',
+            registro_id:  $centro_educativo['ac_plan_estudio_id'], seccion: 'ac_plan_estudio',style:  'warning', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $centro_educativo['link_modifica'] = $btn_modifica;
+
+        $btn_ve = $this->html_base->button_href(accion:'ve_centro_educativo',etiqueta:  'Ver',
+            registro_id:  $centro_educativo['ac_plan_estudio_id'], seccion: 'ac_plan_estudio',style:  'info', params: $params);
+
+        if(errores::$error){
+            return $this->errores->error(mensaje: 'Error al generar btn',data:  $btn_elimina);
+        }
+        $centro_educativo['link_ve'] = $btn_ve;
+        return $centro_educativo;
     }
 }
