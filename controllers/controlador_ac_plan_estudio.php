@@ -353,7 +353,7 @@ class controlador_ac_plan_estudio extends system {
             return $this->errores->error(mensaje: 'Error al generar template',data:  $r_modifica);
         }
 
-        $filtro['ac_plan_estudio.id']= $this->registro_id;
+        $filtro['ac_plan_estudio_pertenece.id']= $this->ac_plan_estudio_pertenece_id;
         $r_ac_plan_estudio_pertenece = (new ac_plan_estudio_pertenece($this->link))->filtro_and(filtro: $filtro);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al obtener registros',data:  $r_ac_plan_estudio_pertenece);
