@@ -38,12 +38,12 @@
                     <div class="">
                         <table class="table table-striped footable-sort" data-sorting="true">
                             <th>Id</th>
-                            <th>Matricula Alumno</th>
-                            <th>Nombre Alumno</th>
-                            <th>Apellido Paterno</th>
-                            <th>Apellido Materno</th>
-                            <th>Fecha Ingreso</th>
-                            <th>Plantel</th>
+                            <th>Codigo</th>
+                            <th>Descripcion</th>
+                            <th>Clave</th>
+                            <th>Nivel</th>
+                            <th>RVOE</th>
+                            <th>Centro Educativo</th>
 
                             <th>Ver</th>
                             <th>Modifica</th>
@@ -53,12 +53,12 @@
                             <?php foreach ($controlador->centros_educativos->registros as $centro_educativo){
                                 ?>
                             <tr>
-                                <td><?php echo $centro_educativo['ac_alumno_pertenece_id']; ?></td>
-                                <td><?php echo $centro_educativo['ac_alumno_matricula']; ?></td>
-                                <td><?php echo $centro_educativo['ac_alumno_nombre']; ?></td>
-                                <td><?php echo $centro_educativo['ac_alumno_apellido_paterno']; ?></td>
-                                <td><?php echo $centro_educativo['ac_alumno_apellido_materno']; ?></td>
-                                <td><?php echo $centro_educativo['ac_alumno_pertenece_fecha_ingreso']; ?></td>
+                                <td><?php echo $centro_educativo['ac_plan_estudio_pertenece_id']; ?></td>
+                                <td><?php echo $centro_educativo['ac_plan_estudio_codigo']; ?></td>
+                                <td><?php echo $centro_educativo['ac_plan_estudio_descripcion']; ?></td>
+                                <td><?php echo $centro_educativo['ac_plan_estudio_clave_plan']; ?></td>
+                                <td><?php echo $centro_educativo['ac_nivel_descripcion']; ?></td>
+                                <td><?php echo $centro_educativo['ac_rvoe_numero']; ?></td>
                                 <td><?php echo $centro_educativo['direccion']; ?></td>
 
                                 <td><?php echo $centro_educativo['link_ve']; ?></td>
