@@ -53,9 +53,9 @@ class ac_plan_estudio_html extends html_controler {
         return $controler->inputs;
     }
 
-    public function genera_inputs_alta(controlador_ac_plan_estudio $controler,PDO $link): array|stdClass
+    public function genera_inputs_alta(controlador_ac_plan_estudio $controler,array $keys_selects,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: $keys_selects, link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
@@ -84,7 +84,7 @@ class ac_plan_estudio_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    protected function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
         $selects = new stdClass();
         $inputs = new stdClass();
