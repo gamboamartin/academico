@@ -53,6 +53,30 @@ class controlador_ac_turnoTest extends test {
         errores::$error = false;
     }
 
+    public function test_status(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'ac_turno';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 2;
+        $_GET['session_id'] = '1';
+        //$html_ = new html();
+        //$html = new ac_estado_alumno_html($html_);
+
+        $ctl = new controlador_ac_turno(link: $this->link, paths_conf: $this->paths_conf);
+        //$html = new liberator($html);
+
+        $ctl->registro_id = 1;
+
+        $resultado = $ctl->status(false, false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        $this->assertStringContainsStringIgnoringCase('Exito al ejecutar sql del modelo ac_turno',$resultado->mensaje);
+        errores::$error = false;
+    }
+
 
 
 }
