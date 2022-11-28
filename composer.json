@@ -15,7 +15,7 @@
           "gamboamartin\\academico\\controllers\\": "controllers",
           "gamboamartin\\academico\\tests\\": "tests",
           "config\\": "config/",
-          "models\\": "orm",
+          "gamboamartin\\academico\\models\\": "orm",
           "links\\": "links/",
           "html\\": "templates/directivas/"
 

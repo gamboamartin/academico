@@ -9,13 +9,13 @@
 namespace gamboamartin\academico\controllers;
 
 
+use gamboamartin\academico\models\ac_estado_alumno;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
 
 use html\ac_estado_alumno_html;
 
-use models\ac_estado_alumno;
 
 use PDO;
 use stdClass;

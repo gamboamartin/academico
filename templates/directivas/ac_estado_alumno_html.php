@@ -1,10 +1,11 @@
 <?php
 namespace html;
 
+use gamboamartin\academico\models\ac_estado_alumno;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\ac_estado_alumno;
+
 use PDO;
 
 

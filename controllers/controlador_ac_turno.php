@@ -9,17 +9,12 @@
 namespace gamboamartin\academico\controllers;
 
 
+use gamboamartin\academico\models\ac_turno;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template_1\html;
-use html\ac_centro_educativo_html;
-use html\ac_nivel_html;
-use html\ac_plan_estudio_html;
 use html\ac_turno_html;
-use models\ac_centro_educativo;
-use models\ac_nivel;
-use models\ac_plan_estudio;
-use models\ac_turno;
+
 use PDO;
 use stdClass;
 
@@ -30,10 +25,10 @@ class controlador_ac_turno extends system {
 
         $modelo = new ac_turno(link: $link);
         $html_ = new ac_turno_html($html);
-        $obj_link = new links_menu($this->registro_id);
+        $obj_link = new links_menu(link: $link, registro_id: $this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
-        $this->titulo_lista = 'Nivel';
+        $this->titulo_lista = 'Turno';
     }
 
 
