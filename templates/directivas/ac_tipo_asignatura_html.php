@@ -1,14 +1,14 @@
 <?php
 namespace html;
 
-use gamboamartin\academico\controllers\controlador_ac_centro_educativo;
+
+use gamboamartin\academico\models\ac_tipo_asignatura;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\template\directivas;
-use models\ac_nivel;
-use models\ac_tipo_asignatura;
+
 use PDO;
-use stdClass;
+
 
 
 class ac_tipo_asignatura_html extends html_controler {

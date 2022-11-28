@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\academico\models;
 use base\orm\modelo;
 use gamboamartin\errores\errores;
 use PDO;
@@ -7,12 +7,14 @@ use stdClass;
 
 class ac_plan_estudio extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'ac_plan_estudio';
         $columnas = array($tabla=>false,'ac_nivel'=>$tabla, 'ac_rvoe' => $tabla);
         $campos_obligatorios = array('ac_nivel_id', 'ac_rvoe_id');
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas);
+
+        $this->NAMESPACE = __NAMESPACE__;
     }
 
     public function alta_bd(): array|stdClass

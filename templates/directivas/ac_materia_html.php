@@ -1,13 +1,14 @@
 <?php
 namespace html;
 
-use gamboamartin\academico\controllers\controlador_ac_centro_educativo;
+
 use gamboamartin\academico\controllers\controlador_ac_materia;
+use gamboamartin\academico\models\ac_materia;
 use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
-use models\ac_materia;
+
 use PDO;
 use stdClass;
 
@@ -46,7 +47,7 @@ class ac_materia_html extends html_controler {
 
     public function genera_inputs_alta(controlador_ac_materia $controler,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: array(), link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
@@ -75,7 +76,7 @@ class ac_materia_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    protected function init_alta( array $keys_selects , PDO $link): array|stdClass
     {
         $selects = new stdClass();
         $inputs = new stdClass();
@@ -119,6 +120,14 @@ class ac_materia_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
         }
         $inputs->clave = $input;
+
+        $input = $this->input_descripcion(cols: 12,row_upd: $row_upd,value_vacio:  false);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar input text',data:  $input);
+        }
+        $inputs->descripcion = $input;
+
+
 
         $alta_inputs = new stdClass();
 
@@ -193,7 +202,7 @@ class ac_materia_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'id_asignatura',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'id_asignatura',
             place_holder: 'Id Asignatura',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -216,7 +225,7 @@ class ac_materia_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'no_creditos',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'no_creditos',
             place_holder: 'No Creditos',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -233,7 +242,7 @@ class ac_materia_html extends html_controler {
     public function clave(int $cols, stdClass $row_upd, bool $value_vacio): array|string
     {
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'clave',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'clave',
             place_holder: 'Clave',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
