@@ -13,9 +13,9 @@
     "autoload": {
         "psr-4": {
           "gamboamartin\\academico\\controllers\\": "controllers",
+          "gamboamartin\\academico\\tests\\": "tests",
           "config\\": "config/",
           "models\\": "orm",
-          "tests\\": "tests/",
           "links\\": "links/",
           "html\\": "templates/directivas/"
 
