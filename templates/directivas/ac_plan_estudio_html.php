@@ -197,7 +197,7 @@ class ac_plan_estudio_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disabled: false,name: 'id_carrera',
+        $html =$this->directivas->input_text_required(disable: false,name: 'id_carrera',
             place_holder: 'Id Carrera',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -220,7 +220,7 @@ class ac_plan_estudio_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disabled: false,name: 'clave_plan',
+        $html =$this->directivas->input_text_required(disable: false,name: 'clave_plan',
             place_holder: 'Clave Plan',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -243,7 +243,7 @@ class ac_plan_estudio_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disabled: false,name: 'calificacion_min_aprobacion',
+        $html =$this->directivas->input_text_required(disable: false,name: 'calificacion_min_aprobacion',
             place_holder: 'Calificacion Minimo Aprobacion',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
