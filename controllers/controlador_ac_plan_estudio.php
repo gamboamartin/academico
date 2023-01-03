@@ -45,7 +45,7 @@ class controlador_ac_plan_estudio extends system {
         }
 
         $link_ac_plan_estudio_pertenece_alta_bd = $obj_link->link_ac_plan_estudio_pertenece_alta_bd(
-            ac_plan_estudio_id: $this->registro_id);
+            ac_plan_estudio_id: $this->registro_id,link: $link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal alta',
                 data:  $link_ac_plan_estudio_pertenece_alta_bd);
@@ -56,7 +56,8 @@ class controlador_ac_plan_estudio extends system {
 
 
         $link_ac_plan_estudio_pertenece_modifica_bd = $obj_link->link_ac_plan_estudio_pertenece_modifica_bd(
-            ac_plan_estudio_id: $this->registro_id, ac_plan_estudio_pertenece_id: $this->ac_plan_estudio_pertenece_id);
+            ac_plan_estudio_id: $this->registro_id, ac_plan_estudio_pertenece_id: $this->ac_plan_estudio_pertenece_id,
+            link: $link);
         if(errores::$error){
             $error = $this->errores->error(mensaje: 'Error al generar link sucursal modifica',
                 data:  $link_ac_plan_estudio_pertenece_modifica_bd);
