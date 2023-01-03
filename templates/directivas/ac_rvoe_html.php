@@ -6,7 +6,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\system\html_controler;
 use gamboamartin\system\system;
 use gamboamartin\template\directivas;
-use models\ac_rvoe;
+use gamboamartin\academico\models\ac_rvoe;
 use PDO;
 use stdClass;
 
@@ -40,7 +40,7 @@ class ac_rvoe_html extends html_controler {
 
     public function genera_inputs_alta(controlador_ac_rvoe $controler,PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta(keys_selects: array(),link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
         }
@@ -69,7 +69,7 @@ class ac_rvoe_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    protected function init_alta(array $keys_selects, PDO $link): array|stdClass
     {
         $inputs = new stdClass();
         $fechas = new stdClass();
@@ -130,7 +130,7 @@ class ac_rvoe_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->input_text_required(disable: false,name: 'numero',
+        $html =$this->directivas->input_text_required(disabled: false,name: 'numero',
             place_holder: 'Numero RVOE',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);
@@ -154,7 +154,7 @@ class ac_rvoe_html extends html_controler {
             return $this->error->error(mensaje: 'Error cold debe ser menor o igual a  12', data: $cols);
         }
 
-        $html =$this->directivas->fecha_required(disable: false,name: 'fecha_expedicion',
+        $html =$this->directivas->fecha_required(disabled: false,name: 'fecha_expedicion',
             place_holder: 'Fecha Expedicion RVOE',row_upd: $row_upd, value_vacio: $value_vacio);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar input', data: $html);

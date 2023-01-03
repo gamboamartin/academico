@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\academico\models;
 use base\orm\modelo;
 use PDO;
 
 class ac_rvoe extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'ac_rvoe';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 

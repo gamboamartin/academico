@@ -5,7 +5,7 @@ use PDO;
 
 class ac_nivel extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'ac_nivel';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 
