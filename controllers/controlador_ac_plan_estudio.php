@@ -35,7 +35,7 @@ class controlador_ac_plan_estudio extends system {
 
         $modelo = new ac_plan_estudio(link: $link);
         $html_ = new ac_plan_estudio_html($html);
-        $obj_link = new link_ac_plan_estudio($this->registro_id);
+        $obj_link = new link_ac_plan_estudio(link: $link, registro_id: $this->registro_id);
         parent::__construct(html:$html_, link: $link,modelo:  $modelo, obj_link: $obj_link, paths_conf: $paths_conf);
 
         $this->titulo_lista = 'Plan Estudio';
