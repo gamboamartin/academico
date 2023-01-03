@@ -228,7 +228,7 @@ class controlador_ac_plan_estudio extends system {
             return $this->errores->error(mensaje: 'Error al validar row',data:  $valida);
         }
 
-        $link_asigna_centro_educativo = $this->obj_link->link_con_id(accion:'asigna_centro_educativo',
+        $link_asigna_centro_educativo = $this->obj_link->link_con_id(accion:'asigna_centro_educativo',link: $this->link,
             registro_id:  $row->ac_plan_estudio_id, seccion:  $this->tabla);
         if(errores::$error){
             return $this->errores->error(mensaje: 'Error al genera link',data:  $link_asigna_centro_educativo);
